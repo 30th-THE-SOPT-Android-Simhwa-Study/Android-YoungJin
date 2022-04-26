@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Anshim" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Anshim" parent="Theme.AppCompat.Light">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,5 +12,52 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="Widget.EditText.Style" parent="">
+        <item name="android:background">@drawable/shape_border_radius_6</item>
+        <item name="android:backgroundTint">@color/gray_50</item>
+        <item name="android:paddingVertical">@dimen/spacing12</item>
+        <item name="android:paddingHorizontal">@dimen/spacing10</item>
+        <item name="android:textColorHint">@color/gray_200</item>
+        <item name="android:textAppearance">@style/Widget.EditText.TextAppearance</item>
+    </style>
+
+    <style name="Widget.EditText.TextAppearance" parent="">
+        <item name="android:textSize">@dimen/typographyBase</item>
+        <item name="android:textColor">@color/gray_700</item>
+        <item name="android:fontFamily">@font/suit_m</item>
+    </style>
+
+    <style name="Widget.DetailTextView.Style" parent="">
+        <item name="android:layout_marginTop">@dimen/spacing5</item>
+        <item name="android:textAppearance">@style/Widget.DetailTextView.TextAppearance</item>
+    </style>
+
+    <style name="Widget.DetailTextView.TextAppearance" parent="">
+        <item name="android:textSize">@dimen/typographyDescription</item>
+        <item name="android:textColor">@color/gray_200</item>
+        <item name="android:fontFamily">@font/suit_r</item>
+    </style>
+
+    <style name="Widget.Button.Style" parent="">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:paddingVertical">@dimen/spacingBase</item>
+    </style>
+
+    <style name="Widget.RoundButton.Style" parent="Widget.Button.Style">
+        <item name="android:backgroundTint">@color/selector_button_color</item>
+        <item name="android:background">@drawable/shape_border_radius_28</item>
+        <item name="android:textAppearance">@style/Widget.RoundButton.TextAppearance</item>
+    </style>
+
+    <style name="Widget.RoundButton.TextAppearance" parent="">
+        <item name="android:textSize">@dimen/spacingBase</item>
+        <item name="android:textColor">@color/selector_button_text_color</item>
+        <item name="android:fontFamily">@font/suit_sb</item>
+    </style>
+
 </resources>

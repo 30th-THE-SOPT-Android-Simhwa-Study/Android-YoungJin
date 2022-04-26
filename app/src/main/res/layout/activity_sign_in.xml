@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.sign.screens.SignInActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.sopt.anshim.presentation.sign.viewmodels.SignViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/spacingBase" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/spacingBase" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:fontFamily="@font/montserrat_b"
+            android:text="@string/sopt"
+            android:textColor="@color/gray_700"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/email_input"
+            style="@style/Widget.EditText.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing28"
+            android:hint="@string/sign_email"
+            android:maxLines="1"
+            android:onTextChanged="@{viewModel::onEmailTextChanged}"
+            android:text="@{viewModel.userEmail}"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/email_detail"
+            style="@style/Widget.DetailTextView.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:invisibility="@{viewModel.validEmail}"
+            android:maxLines="1"
+            android:text="@string/sign_email_detail"
+            android:textAppearance="@style/Widget.DetailTextView.TextAppearance"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/email_input" />
+
+        <EditText
+            android:id="@+id/password_input"
+            style="@style/Widget.EditText.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:hint="@string/sign_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:onTextChanged="@{viewModel::onPasswordTextChanged}"
+            android:text="@{viewModel.userPassword}"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/email_detail" />
+
+        <TextView
+            android:id="@+id/password_detail"
+            style="@style/Widget.DetailTextView.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:invisibility="@{viewModel.validPassword}"
+            android:maxLines="1"
+            android:text="@string/sign_password_detail"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/password_input" />
+
+        <Button
+            android:id="@+id/sign_in"
+            style="@style/Widget.RoundButton.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacingBase"
+            android:enabled="@{viewModel.enabledLoginButton}"
+            android:onClick="@{() -> viewModel.signIn()}"
+            android:text="@string/sign_in"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

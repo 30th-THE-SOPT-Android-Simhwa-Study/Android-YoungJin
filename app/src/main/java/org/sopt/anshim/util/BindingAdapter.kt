@@ -1,0 +1,16 @@
+package org.sopt.anshim.util
+
+import android.view.View
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
+import androidx.databinding.BindingAdapter
+
+@BindingAdapter("android:visibility")
+fun View.setVisibilityBinding(isVisible: Boolean) {
+    this.isVisible = isVisible
+}
+
+@BindingAdapter("android:invisibility")
+fun View.setInvisibility(isInvisible: Boolean) {
+    this.isInvisible = isInvisible
+}
