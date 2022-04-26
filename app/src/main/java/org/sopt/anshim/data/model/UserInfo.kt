@@ -8,4 +8,4 @@ data class UserInfo(
     val name: String,
     val mbti: String,
     val email: String
-): Parcelable
+) : Parcelable
