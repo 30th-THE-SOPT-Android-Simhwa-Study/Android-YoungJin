@@ -73,7 +73,8 @@
             android:layout_marginTop="@dimen/spacing28"
             android:hint="@string/name"
             android:inputType="textPersonName"
-            android:text="@={viewModel.inputName}"
+            android:onTextChanged="@{viewModel::onNameTextChanged}"
+            android:text="@{viewModel.friendName}"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/toolbar" />
@@ -86,7 +87,8 @@
             android:layout_marginTop="@dimen/spacingBase"
             android:hint="@string/email"
             android:inputType="textPersonName"
-            android:text="@={viewModel.inputEmail}"
+            android:onTextChanged="@{viewModel::onEmailTextChanged}"
+            android:text="@{viewModel.friendEmail}"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/name" />
@@ -97,7 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing28"
-            android:enabled="@{viewModel.inputName.length() > 0 &amp;&amp; viewModel.inputEmail.length() > 0}"
+            android:enabled="@{viewModel.friendName.length() > 0 &amp;&amp; viewModel.validEmail == true}"
             android:onClick="@{() -> viewModel.saveFriend()}"
             android:text="@string/save"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
