@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.anshim.data.model.UserInfo
+import org.sopt.anshim.domain.models.UserInfo
 import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {

@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.sopt.anshim.R
-import org.sopt.anshim.data.model.UserInfo
+import org.sopt.anshim.domain.models.UserInfo
 import org.sopt.anshim.databinding.ActivityHomeBinding
 import org.sopt.anshim.presentation.home.viewmodels.HomeViewModel
 
