@@ -18,6 +18,6 @@ interface FriendDAO {
     @Query("DELETE FROM friend_data_table")
     suspend fun deleteAllFriends()
 
-    @Query("SELECT * FROM friend_data_table")
+    @Query("SELECT * FROM friend_data_table ORDER BY id DESC")
     fun getAllFriends(): LiveData<List<FriendInfo>>
 }
