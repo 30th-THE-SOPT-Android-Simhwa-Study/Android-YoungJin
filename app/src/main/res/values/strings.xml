@@ -3,10 +3,10 @@
 
     <!-- Global -->
     <string name="sopt">SOPT</string>
+    <string name="email">이메일</string>
 
     <!-- Sign -->
     <string name="sign_in">로그인</string>
-    <string name="sign_email">이메일</string>
     <string name="sign_password">비밀번호</string>
     <string name="sign_email_detail">이메일을 정확하게 입력해 주세요.</string>
     <string name="sign_password_detail">8자리 이상의 영문자, 숫자, 특수 문자 조합으로 입력해 주세요.</string>
