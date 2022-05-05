@@ -13,6 +13,7 @@
     <dimen name="spacing28">28dp</dimen>
 
     <!-- Typography  -->
+    <dimen name="typographyDetail">12sp</dimen>
     <dimen name="typographyDescription">14sp</dimen>
     <dimen name="typographyBase">16sp</dimen>
 
