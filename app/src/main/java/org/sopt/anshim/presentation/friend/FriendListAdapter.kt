@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sopt.anshim.databinding.ItemFriendBinding
 import org.sopt.anshim.domain.models.FriendInfo
 
-class FriendListAdapter :
+class FriendListAdapter(private val clickListener: (FriendInfo) -> Unit) :
     ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendHorizontalViewHolder {
         val binding = ItemFriendBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -20,10 +20,13 @@ class FriendListAdapter :
         holder.bind(data)
     }
 
-    class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
+    inner class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(friend: FriendInfo) {
             binding.friendInfo = friend
+            binding.friendContainer.setOnClickListener {
+                clickListener(friend)
+            }
         }
     }
 

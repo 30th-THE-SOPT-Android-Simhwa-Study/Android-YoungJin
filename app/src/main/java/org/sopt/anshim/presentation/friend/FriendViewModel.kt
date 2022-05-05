@@ -1,10 +1,7 @@
 package org.sopt.anshim.presentation.friend
 
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import org.sopt.anshim.domain.FriendRepository
 import org.sopt.anshim.domain.models.FriendInfo
@@ -13,9 +10,38 @@ import org.sopt.anshim.util.safeLet
 class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
 
     val friends = repository.friends
+    private val selectedFriendInfo = MutableLiveData<FriendInfo?>()
     private val friendName = MutableLiveData<String?>()
     private val friendEmail = MutableLiveData<String?>()
     private val isValidEmail = MutableLiveData<Boolean>()
+    private val isUpdateMode = MediatorLiveData<Boolean?>()
+
+    init {
+        initUpdateMode()
+    }
+
+    private fun initUpdateMode() {
+        isUpdateMode.addSource(friendName) { name ->
+            combineUpdateMode(name, friendEmail.value)
+        }
+        isUpdateMode.addSource(friendEmail) { email ->
+            combineUpdateMode(friendName.value, email)
+        }
+    }
+
+    private fun combineUpdateMode(name: String?, email: String?) {
+        // 선택한 friendInfo가 존재해도 입력된 name과 email을 모두 지운 경우, update mode를 false로 설정
+        if (isUpdateMode.value == true && name?.isEmpty() == true && email?.isEmpty() == true) {
+            isUpdateMode.value = false
+        }
+    }
+
+    fun setSelectedFriendInfo(friend: FriendInfo) {
+        isUpdateMode.value = true
+        selectedFriendInfo.value = friend
+        friendName.value = friend.name
+        friendEmail.value = friend.email
+    }
 
     fun onNameTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         friendName.value = s.toString().trim()
@@ -32,27 +58,54 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
     }
 
     fun saveFriend() {
-        viewModelScope.launch {
-            safeLet(friendName.value, friendEmail.value) { name, email ->
-                repository.insert(FriendInfo(0, name, email))
-                clearFriendInput()
+        if (isUpdateMode.value == true) {
+            updateFriend()
+        } else {
+            registerFriend()
+        }
+        clearFriendInput()
+    }
+
+    private fun registerFriend() {
+        safeLet(friendName.value, friendEmail.value) { name, email ->
+            viewModelScope.launch {
+                repository.insert(FriendInfo(name, email))
             }
         }
     }
 
-    fun updateFriend(Friend: FriendInfo) {
-        viewModelScope.launch {
-            repository.update(Friend)
+    private fun updateFriend() {
+        safeLet(
+            selectedFriendInfo.value,
+            friendName.value,
+            friendEmail.value
+        ) { friend, name, email ->
+            viewModelScope.launch {
+                repository.update(FriendInfo(name, email, friend.id))
+            }
+        }
+        isUpdateMode.value = null
+    }
+
+
+    fun deleteFriend() {
+        if (isUpdateMode.value == true) {
+            deleteFriend(selectedFriendInfo.value)
+        } else {
+            deleteAllFriends()
         }
     }
 
-    fun deleteFriend(Friend: FriendInfo) {
+    private fun deleteFriend(friend: FriendInfo?) {
+        if (friend == null) return
         viewModelScope.launch {
-            repository.delete(Friend)
+            repository.delete(friend)
         }
+        isUpdateMode.value = null
+        clearFriendInput()
     }
 
-    fun deleteAllFriends() {
+    private fun deleteAllFriends() {
         viewModelScope.launch {
             repository.deleteAll()
         }
@@ -66,6 +119,7 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
     fun getFriendName(): LiveData<String?> = friendName
     fun getFriendEmail(): LiveData<String?> = friendEmail
     fun getValidEmail(): LiveData<Boolean?> = isValidEmail
+    fun getUpdateMode(): LiveData<Boolean?> = isUpdateMode
 
     companion object {
         private const val TAG = "FriendViewModel"

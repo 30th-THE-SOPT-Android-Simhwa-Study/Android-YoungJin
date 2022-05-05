@@ -8,10 +8,11 @@ import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityFriendBinding
 import org.sopt.anshim.domain.models.db.FriendDatabase
 import org.sopt.anshim.domain.FriendRepository
+import org.sopt.anshim.domain.models.FriendInfo
 
 class FriendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFriendBinding
-    private val friendAdapter = FriendListAdapter()
+    private val friendAdapter = FriendListAdapter(::onItemClick)
     private val viewModel: FriendViewModel by lazy {
         val dao = FriendDatabase.getInstance(application).friendDAO
         val repository = FriendRepository(dao)
@@ -37,6 +38,10 @@ class FriendActivity : AppCompatActivity() {
         viewModel.friends.observe(this) { friends ->
             friendAdapter.submitList(friends.toMutableList())
         }
+    }
+
+    private fun onItemClick(friend: FriendInfo) {
+        viewModel.setSelectedFriendInfo(friend)
     }
 
     companion object {

@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="org.sopt.anshim.R" />
+
         <variable
             name="viewModel"
             type="org.sopt.anshim.presentation.friend.FriendViewModel" />
@@ -37,12 +39,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/suit_sb"
-                android:onClick="@{() -> viewModel.deleteAllFriends()}"
-                android:text="@string/delete_all"
+                android:onClick="@{() -> viewModel.deleteFriend()}"
+                android:text="@{context.getString(viewModel.updateMode == true ? R.string.delete : R.string.delete_all)}"
                 android:textColor="@color/blue_500"
                 android:textSize="@dimen/typographyBase"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/delete_all" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -101,10 +104,11 @@
             android:layout_marginTop="@dimen/spacing28"
             android:enabled="@{viewModel.friendName.length() > 0 &amp;&amp; viewModel.validEmail == true}"
             android:onClick="@{() -> viewModel.saveFriend()}"
-            android:text="@string/save"
+            android:text="@{context.getString(viewModel.updateMode == true ? R.string.update : R.string.save)}"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
-            app:layout_constraintTop_toBottomOf="@id/email" />
+            app:layout_constraintTop_toBottomOf="@id/email"
+            tools:text="@string/save" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/friend_list"
