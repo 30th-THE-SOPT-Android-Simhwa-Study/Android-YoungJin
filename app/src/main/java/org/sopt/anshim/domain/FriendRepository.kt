@@ -1,6 +1,6 @@
 package org.sopt.anshim.domain
 
-import org.sopt.anshim.domain.models.db.FriendDAO
+import org.sopt.anshim.data.models.db.FriendDAO
 import org.sopt.anshim.domain.models.FriendInfo
 
 class FriendRepository(private val dao: FriendDAO) {

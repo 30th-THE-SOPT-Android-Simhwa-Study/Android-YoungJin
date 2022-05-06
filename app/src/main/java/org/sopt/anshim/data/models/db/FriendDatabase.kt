@@ -1,4 +1,4 @@
-package org.sopt.anshim.domain.models.db
+package org.sopt.anshim.data.models.db
 
 import android.content.Context
 import androidx.room.Database

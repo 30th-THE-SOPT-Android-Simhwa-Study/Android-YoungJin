@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityFriendBinding
-import org.sopt.anshim.domain.models.db.FriendDatabase
+import org.sopt.anshim.data.models.db.FriendDatabase
 import org.sopt.anshim.domain.FriendRepository
 import org.sopt.anshim.domain.models.FriendInfo
 
