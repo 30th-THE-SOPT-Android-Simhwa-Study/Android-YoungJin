@@ -2,7 +2,6 @@ package org.sopt.anshim.data.models.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import org.sopt.anshim.domain.models.FriendInfo
 
 @Dao
 interface FriendDAO {

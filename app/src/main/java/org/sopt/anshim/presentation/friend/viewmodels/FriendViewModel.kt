@@ -1,18 +1,20 @@
-package org.sopt.anshim.presentation.friend
+package org.sopt.anshim.presentation.friend.viewmodels
 
 import android.util.Patterns
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import org.sopt.anshim.domain.FriendRepository
-import org.sopt.anshim.domain.models.FriendInfo
+import org.sopt.anshim.domain.repositories.FriendRepository
+import org.sopt.anshim.data.models.db.FriendInfo
+import org.sopt.anshim.data.models.types.MBTI
 import org.sopt.anshim.util.safeLet
+import org.sopt.anshim.util.safeValueOf
 
 class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
-
-    val friends = repository.friends
+    val friends = repository.getAll()
     private val selectedFriendInfo = MutableLiveData<FriendInfo?>()
     private val friendName = MutableLiveData<String?>()
     private val friendEmail = MutableLiveData<String?>()
+    private val friendMBTI = MutableLiveData<String?>()
     private val isValidEmail = MutableLiveData<Boolean>()
     private val isUpdateMode = MediatorLiveData<Boolean?>()
 
@@ -52,6 +54,10 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
         checkEmailFormat()
     }
 
+    fun onMBTITextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        friendMBTI.value = s.toString().trim()
+    }
+
     private fun checkEmailFormat() {
         val emailPattern = Patterns.EMAIL_ADDRESS
         isValidEmail.value = emailPattern.matcher(friendEmail.value).matches()
@@ -69,7 +75,7 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
     private fun registerFriend() {
         safeLet(friendName.value, friendEmail.value) { name, email ->
             viewModelScope.launch {
-                repository.insert(FriendInfo(name, email))
+                repository.insert(FriendInfo(name, email, safeValueOf<MBTI>(friendMBTI.value?.uppercase())))
             }
         }
     }
@@ -81,7 +87,14 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
             friendEmail.value
         ) { friend, name, email ->
             viewModelScope.launch {
-                repository.update(FriendInfo(name, email, friend.id))
+                repository.update(
+                    FriendInfo(
+                        name,
+                        email,
+                        safeValueOf<MBTI>(friendMBTI.value?.uppercase()),
+                        friend.id
+                    )
+                )
             }
         }
         isUpdateMode.value = null
@@ -114,10 +127,12 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
     private fun clearFriendInput() {
         friendName.value = null
         friendEmail.value = null
+        friendMBTI.value = null
     }
 
     fun getFriendName(): LiveData<String?> = friendName
     fun getFriendEmail(): LiveData<String?> = friendEmail
+    fun getFriendMBTI(): LiveData<String?> = friendMBTI
     fun getValidEmail(): LiveData<Boolean?> = isValidEmail
     fun getUpdateMode(): LiveData<Boolean?> = isUpdateMode
 

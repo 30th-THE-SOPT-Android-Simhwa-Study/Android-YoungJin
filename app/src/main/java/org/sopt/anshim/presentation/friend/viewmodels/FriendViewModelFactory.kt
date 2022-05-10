@@ -1,8 +1,8 @@
-package org.sopt.anshim.presentation.friend
+package org.sopt.anshim.presentation.friend.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import org.sopt.anshim.domain.FriendRepository
+import org.sopt.anshim.domain.repositories.FriendRepository
 
 class FriendViewModelFactory(private val repository: FriendRepository) :
     ViewModelProvider.Factory {

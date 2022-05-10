@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.friend.screens.FriendDetailActivity">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.sopt.anshim.presentation.friend.viewmodels.FriendDetailViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_welcome" />
+
+        <TextView
+            android:id="@+id/mbti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingLarge"
+            android:fontFamily="@font/suit_b"
+            android:text="@{viewModel.friend.mbti.name()}"
+            android:textColor="@color/gray_700"
+            android:textSize="24sp"
+            tools:text="ISFP" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacingBase"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacingBase">
+
+            <TextView
+                android:id="@+id/mbti_feature1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/suit_r"
+                android:text="@{context.getString(viewModel.getMBTIFeature(viewModel.friend.mbti).get(0).strRes)}"
+                android:textColor="@color/gray_700"
+                android:textSize="20sp"
+                tools:text="@string/isfp1" />
+
+            <TextView
+                android:id="@+id/mbti_feature2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/suit_r"
+                android:gravity="center"
+                android:layout_marginVertical="@dimen/spacingBase"
+                android:text="@{context.getString(viewModel.getMBTIFeature(viewModel.friend.mbti).get(1).strRes)}"
+                android:textColor="@color/gray_700"
+                android:textSize="20sp"
+                tools:text="@string/isfp2" />
+
+            <TextView
+                android:id="@+id/mbti_feature3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/suit_r"
+                android:gravity="center"
+                android:text="@{context.getString(viewModel.getMBTIFeature(viewModel.friend.mbti).get(2).strRes)}"
+                android:textColor="@color/gray_700"
+                android:textSize="20sp"
+                tools:text="@string/isfp3" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

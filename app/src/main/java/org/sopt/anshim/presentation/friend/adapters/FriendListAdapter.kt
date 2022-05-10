@@ -1,4 +1,4 @@
-package org.sopt.anshim.presentation.friend
+package org.sopt.anshim.presentation.friend.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.anshim.databinding.ItemFriendBinding
-import org.sopt.anshim.domain.models.FriendInfo
+import org.sopt.anshim.data.models.db.FriendInfo
 
 class FriendListAdapter(private val clickListener: (FriendInfo) -> Unit) :
     ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {

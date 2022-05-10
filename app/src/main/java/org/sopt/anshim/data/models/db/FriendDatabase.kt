@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.sopt.anshim.domain.models.FriendInfo
 
-@Database(entities = [FriendInfo::class], version = 1)
+@Database(entities = [FriendInfo::class], version = 2)
 abstract class FriendDatabase: RoomDatabase() {
 
     abstract val friendDAO : FriendDAO
