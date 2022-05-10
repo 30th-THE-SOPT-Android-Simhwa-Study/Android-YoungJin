@@ -11,20 +11,20 @@
         android:theme="@style/Theme.Anshim">
         <activity
             android:name="org.sopt.anshim.presentation.sign.screens.SignInActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".presentation.home.screens.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.friend.FriendActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".presentation.home.screens.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package org.sopt.anshim.data.model
+package org.sopt.anshim.domain.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

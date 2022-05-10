@@ -1,7 +1,7 @@
 package org.sopt.anshim.presentation.home.viewmodels
 
 import androidx.lifecycle.ViewModel
-import org.sopt.anshim.data.model.UserInfo
+import org.sopt.anshim.domain.models.UserInfo
 
 class HomeViewModel : ViewModel() {
     private var userInfo: UserInfo? = null
