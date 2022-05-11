@@ -15,7 +15,7 @@ import org.sopt.anshim.presentation.friend.viewmodels.FriendViewModel
 @AndroidEntryPoint
 class FriendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFriendBinding
-    private val friendAdapter = FriendListAdapter(::onItemClick)
+    private val friendAdapter = FriendListAdapter(::onItemClick, ::onItemLongClick)
     private val viewModel: FriendViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,9 +45,11 @@ class FriendActivity : AppCompatActivity() {
             putExtra(ARG_FRIEND_INFO, friend)
         }
         startActivity(intent)
+    }
 
-        // TODO long click으로 변경
-        // viewModel.setSelectedFriendInfo(friend)
+    private fun onItemLongClick(friend: FriendInfo): Boolean {
+        viewModel.setSelectedFriendInfo(friend)
+        return true
     }
 
     companion object {

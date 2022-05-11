@@ -46,6 +46,7 @@ class FriendViewModel @Inject constructor(private val repository: FriendReposito
         selectedFriendInfo.value = friend
         friendName.value = friend.name
         friendEmail.value = friend.email
+        friendMBTI.value = friend.mbti?.name
     }
 
     fun onNameTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
