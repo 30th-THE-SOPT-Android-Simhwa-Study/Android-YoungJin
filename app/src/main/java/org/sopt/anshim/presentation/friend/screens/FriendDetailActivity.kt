@@ -1,25 +1,19 @@
 package org.sopt.anshim.presentation.friend.screens
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
-import org.sopt.anshim.data.datasources.FriendLocalDataSource
-import org.sopt.anshim.data.repositories.FriendRepositoryImpl
-import org.sopt.anshim.data.models.db.FriendDatabase
-import org.sopt.anshim.databinding.ActivityFriendDetailBinding
 import org.sopt.anshim.data.models.db.FriendInfo
+import org.sopt.anshim.databinding.ActivityFriendDetailBinding
 import org.sopt.anshim.presentation.friend.viewmodels.FriendDetailViewModel
-import org.sopt.anshim.presentation.friend.viewmodels.FriendDetailViewModelFactory
 
+@AndroidEntryPoint
 class FriendDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFriendDetailBinding
-    private val viewModel: FriendDetailViewModel by lazy {
-        val dao = FriendDatabase.getInstance(application).friendDAO
-        val repositoryImpl = FriendRepositoryImpl(FriendLocalDataSource(dao))
-        ViewModelProvider(this, FriendDetailViewModelFactory(repositoryImpl))[FriendDetailViewModel::class.java]
-    }
+    private val viewModel: FriendDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

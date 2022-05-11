@@ -3,12 +3,16 @@ package org.sopt.anshim.presentation.friend.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.anshim.domain.repositories.FriendRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.data.models.types.MBTI
 import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.domain.repositories.FriendRepository
+import javax.inject.Inject
 
-class FriendDetailViewModel(private val repository: FriendRepository) : ViewModel() {
+@HiltViewModel
+class FriendDetailViewModel @Inject constructor(private val repository: FriendRepository) :
+    ViewModel() {
     private val friend = MutableLiveData<FriendInfo?>()
 
     fun setFriend(friend: FriendInfo) {

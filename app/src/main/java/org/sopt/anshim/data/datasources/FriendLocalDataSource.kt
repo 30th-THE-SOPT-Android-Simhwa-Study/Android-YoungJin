@@ -5,8 +5,11 @@ import org.sopt.anshim.data.models.db.FriendDAO
 import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.data.models.types.MBTI
 import org.sopt.anshim.data.models.types.MBTIFeatures
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class FriendLocalDataSource(private val dao: FriendDAO) {
+@Singleton
+class FriendLocalDataSource @Inject constructor(private val dao: FriendDAO) {
     private val friends = dao.getAllFriends()
 
     fun getAll(): LiveData<List<FriendInfo>> {
@@ -30,7 +33,7 @@ class FriendLocalDataSource(private val dao: FriendDAO) {
     }
 
     fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures> {
-        return when(mbti) {
+        return when (mbti) {
             MBTI.ISTJ -> listOf(MBTIFeatures.ISTJ1, MBTIFeatures.ISTJ2, MBTIFeatures.ISTJ3)
             MBTI.ISTP -> listOf(MBTIFeatures.ISTP1, MBTIFeatures.ISTP2, MBTIFeatures.ISTP3)
             MBTI.ISFJ -> listOf(MBTIFeatures.ISFJ1, MBTIFeatures.ISFJ2, MBTIFeatures.ISFJ3)

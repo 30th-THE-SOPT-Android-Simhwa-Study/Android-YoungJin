@@ -6,24 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [FriendInfo::class], version = 2)
-abstract class FriendDatabase: RoomDatabase() {
+abstract class FriendDatabase : RoomDatabase() {
 
-    abstract val friendDAO : FriendDAO
+    abstract fun friendDAO(): FriendDAO
 
-    companion object{
+    companion object {
         @Volatile
-        private var INSTANCE : FriendDatabase? = null
-        fun getInstance(context: Context): FriendDatabase{
-            synchronized(this){
-                var instance = INSTANCE
-                if(instance==null){
-                    instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        FriendDatabase::class.java,
-                        "friend_data_database"
-                    ).build()
-                }
-                return instance
+        private var instance: FriendDatabase? = null
+        fun getInstance(context: Context): FriendDatabase {
+            synchronized(this) {
+                return instance ?: Room.databaseBuilder(
+                    context.applicationContext,
+                    FriendDatabase::class.java,
+                    "friend_data_database"
+                ).build()
             }
         }
     }

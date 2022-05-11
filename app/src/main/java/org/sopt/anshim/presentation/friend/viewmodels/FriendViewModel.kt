@@ -2,14 +2,17 @@ package org.sopt.anshim.presentation.friend.viewmodels
 
 import android.util.Patterns
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.anshim.domain.repositories.FriendRepository
 import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.data.models.types.MBTI
+import org.sopt.anshim.domain.repositories.FriendRepository
 import org.sopt.anshim.util.safeLet
 import org.sopt.anshim.util.safeValueOf
+import javax.inject.Inject
 
-class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
+@HiltViewModel
+class FriendViewModel @Inject constructor(private val repository: FriendRepository) : ViewModel() {
     val friends = repository.getAll()
     private val selectedFriendInfo = MutableLiveData<FriendInfo?>()
     private val friendName = MutableLiveData<String?>()
@@ -75,7 +78,13 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
     private fun registerFriend() {
         safeLet(friendName.value, friendEmail.value) { name, email ->
             viewModelScope.launch {
-                repository.insert(FriendInfo(name, email, safeValueOf<MBTI>(friendMBTI.value?.uppercase())))
+                repository.insert(
+                    FriendInfo(
+                        name,
+                        email,
+                        safeValueOf<MBTI>(friendMBTI.value?.uppercase())
+                    )
+                )
             }
         }
     }

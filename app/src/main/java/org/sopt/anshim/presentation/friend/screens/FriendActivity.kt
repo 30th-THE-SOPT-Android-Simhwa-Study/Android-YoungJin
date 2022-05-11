@@ -2,28 +2,21 @@ package org.sopt.anshim.presentation.friend.screens
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
-import org.sopt.anshim.data.datasources.FriendLocalDataSource
-import org.sopt.anshim.databinding.ActivityFriendBinding
-import org.sopt.anshim.data.models.db.FriendDatabase
-import org.sopt.anshim.data.repositories.FriendRepositoryImpl
 import org.sopt.anshim.data.models.db.FriendInfo
+import org.sopt.anshim.databinding.ActivityFriendBinding
 import org.sopt.anshim.presentation.friend.adapters.FriendListAdapter
 import org.sopt.anshim.presentation.friend.viewmodels.FriendViewModel
-import org.sopt.anshim.presentation.friend.viewmodels.FriendViewModelFactory
 
+@AndroidEntryPoint
 class FriendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFriendBinding
     private val friendAdapter = FriendListAdapter(::onItemClick)
-    private val viewModel: FriendViewModel by lazy {
-        val dao = FriendDatabase.getInstance(application).friendDAO
-        val repositoryImpl = FriendRepositoryImpl(FriendLocalDataSource(dao))
-        repositoryImpl.friendLocalDataSource
-        ViewModelProvider(this, FriendViewModelFactory(repositoryImpl))[FriendViewModel::class.java]
-    }
+    private val viewModel: FriendViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

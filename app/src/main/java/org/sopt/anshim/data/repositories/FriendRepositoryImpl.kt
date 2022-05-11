@@ -2,12 +2,13 @@ package org.sopt.anshim.data.repositories
 
 import androidx.lifecycle.LiveData
 import org.sopt.anshim.data.datasources.FriendLocalDataSource
-import org.sopt.anshim.domain.repositories.FriendRepository
 import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.data.models.types.MBTI
 import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.domain.repositories.FriendRepository
+import javax.inject.Inject
 
-class FriendRepositoryImpl(val friendLocalDataSource: FriendLocalDataSource):
+class FriendRepositoryImpl @Inject constructor(private val friendLocalDataSource: FriendLocalDataSource) :
     FriendRepository {
     override fun getAll(): LiveData<List<FriendInfo>> {
         return friendLocalDataSource.getAll()
