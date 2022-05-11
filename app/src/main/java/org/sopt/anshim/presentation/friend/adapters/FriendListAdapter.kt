@@ -17,12 +17,12 @@ class FriendListAdapter(private val clickListener: (FriendInfo) -> Unit) :
 
     override fun onBindViewHolder(holder: FriendHorizontalViewHolder, position: Int) {
         val data = currentList[position]
-        holder.bind(data)
+        holder.bind(data, clickListener)
     }
 
-    inner class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
+    class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(friend: FriendInfo) {
+        fun bind(friend: FriendInfo, clickListener: (FriendInfo) -> Unit) {
             binding.friendInfo = friend
             binding.friendContainer.setOnClickListener {
                 clickListener(friend)
