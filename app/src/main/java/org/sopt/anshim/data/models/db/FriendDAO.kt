@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface FriendDAO {
     @Insert
-    suspend fun insertFriend(friend: FriendInfo) : Long
+    suspend fun insertFriend(friend: FriendInfo): Long
 
     @Update
     suspend fun updateFriend(friend: FriendInfo)

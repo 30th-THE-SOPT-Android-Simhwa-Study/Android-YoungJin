@@ -10,27 +10,16 @@ import javax.inject.Inject
 
 class FriendRepositoryImpl @Inject constructor(private val friendLocalDataSource: FriendLocalDataSource) :
     FriendRepository {
-    override fun getAll(): LiveData<List<FriendInfo>> {
-        return friendLocalDataSource.getAll()
-    }
+    override fun getAll(): LiveData<List<FriendInfo>> = friendLocalDataSource.getAll()
 
-    override suspend fun insert(friend: FriendInfo) {
-        friendLocalDataSource.insert(friend)
-    }
+    override suspend fun insert(friend: FriendInfo) = friendLocalDataSource.insert(friend)
 
-    override suspend fun update(friend: FriendInfo) {
-        friendLocalDataSource.update(friend)
-    }
+    override suspend fun update(friend: FriendInfo) = friendLocalDataSource.update(friend)
 
-    override suspend fun delete(friend: FriendInfo) {
-        friendLocalDataSource.delete(friend)
-    }
+    override suspend fun delete(friend: FriendInfo) = friendLocalDataSource.delete(friend)
 
-    override suspend fun deleteAll() {
-        friendLocalDataSource.deleteAll()
-    }
+    override suspend fun deleteAll() = friendLocalDataSource.deleteAll()
 
-    override fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures> {
-        return friendLocalDataSource.getMBTIFeatures(mbti)
-    }
+    override fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures> =
+        friendLocalDataSource.getMBTIFeatures(mbti)
 }
