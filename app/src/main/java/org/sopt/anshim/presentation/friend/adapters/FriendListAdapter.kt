@@ -10,9 +10,8 @@ import org.sopt.anshim.databinding.ItemFriendBinding
 
 class FriendListAdapter(
     private val clickListener: (FriendInfo) -> Unit,
-    private val longClickListener: (FriendInfo) -> Boolean
-) :
-    ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {
+    private val longClickListener: (FriendInfo) -> Boolean,
+) : ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendHorizontalViewHolder {
         val binding = ItemFriendBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FriendHorizontalViewHolder(binding)
@@ -28,7 +27,7 @@ class FriendListAdapter(
         fun bind(
             friend: FriendInfo,
             clickListener: (FriendInfo) -> Unit,
-            longClickListener: (FriendInfo) -> Boolean
+            longClickListener: (FriendInfo) -> Boolean,
         ) {
             binding.friendInfo = friend
             binding.friendContainer.apply {
