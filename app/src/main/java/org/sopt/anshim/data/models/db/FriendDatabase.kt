@@ -5,5 +5,5 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [FriendInfo::class], version = 2)
 abstract class FriendDatabase : RoomDatabase() {
-    abstract fun friendDAO(): FriendDAO
+    abstract fun friendDao(): FriendDao
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface FriendDAO {
+interface FriendDao {
     @Insert
     suspend fun insertFriend(friend: FriendInfo): Long
 

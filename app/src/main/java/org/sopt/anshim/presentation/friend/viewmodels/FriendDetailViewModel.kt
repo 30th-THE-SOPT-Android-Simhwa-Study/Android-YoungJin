@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.sopt.anshim.data.models.db.FriendInfo
-import org.sopt.anshim.data.models.types.MBTI
-import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.data.models.types.Mbti
+import org.sopt.anshim.data.models.types.MbtiFeatures
 import org.sopt.anshim.domain.repositories.FriendRepository
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class FriendDetailViewModel @Inject constructor(private val repository: FriendRe
     }
 
     fun getFriend(): LiveData<FriendInfo?> = friend
-    fun getMBTIFeature(mbti: MBTI): List<MBTIFeatures> = repository.getMBTIFeatures(mbti)
+    fun getMBTIFeature(mbti: Mbti): List<MbtiFeatures> = repository.getMBTIFeatures(mbti)
 
     companion object {
         private const val TAG = "FriendDetailViewModel"

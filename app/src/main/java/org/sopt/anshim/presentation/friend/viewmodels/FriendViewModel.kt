@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.anshim.data.models.db.FriendInfo
-import org.sopt.anshim.data.models.types.MBTI
+import org.sopt.anshim.data.models.types.Mbti
 import org.sopt.anshim.domain.repositories.FriendRepository
 import org.sopt.anshim.util.safeLet
 import org.sopt.anshim.util.safeValueOf
@@ -83,7 +83,7 @@ class FriendViewModel @Inject constructor(private val repository: FriendReposito
                     FriendInfo(
                         name,
                         email,
-                        safeValueOf<MBTI>(friendMBTI.value?.uppercase())
+                        safeValueOf<Mbti>(friendMBTI.value?.uppercase())
                     )
                 )
             }
@@ -101,7 +101,7 @@ class FriendViewModel @Inject constructor(private val repository: FriendReposito
                     FriendInfo(
                         name,
                         email,
-                        safeValueOf<MBTI>(friendMBTI.value?.uppercase()),
+                        safeValueOf<Mbti>(friendMBTI.value?.uppercase()),
                         friend.id
                     )
                 )

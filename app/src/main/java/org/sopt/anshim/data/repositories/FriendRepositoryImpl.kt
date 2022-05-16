@@ -3,8 +3,8 @@ package org.sopt.anshim.data.repositories
 import androidx.lifecycle.LiveData
 import org.sopt.anshim.data.datasources.FriendLocalDataSource
 import org.sopt.anshim.data.models.db.FriendInfo
-import org.sopt.anshim.data.models.types.MBTI
-import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.data.models.types.Mbti
+import org.sopt.anshim.data.models.types.MbtiFeatures
 import org.sopt.anshim.domain.repositories.FriendRepository
 import javax.inject.Inject
 
@@ -20,6 +20,6 @@ class FriendRepositoryImpl @Inject constructor(private val friendLocalDataSource
 
     override suspend fun deleteAll() = friendLocalDataSource.deleteAll()
 
-    override fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures> =
-        friendLocalDataSource.getMBTIFeatures(mbti)
+    override fun getMBTIFeatures(mbti: Mbti): List<MbtiFeatures> =
+        friendLocalDataSource.getMbtiFeatures(mbti)
 }

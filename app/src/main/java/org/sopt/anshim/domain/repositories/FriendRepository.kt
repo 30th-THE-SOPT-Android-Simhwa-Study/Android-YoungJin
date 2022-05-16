@@ -2,8 +2,8 @@ package org.sopt.anshim.domain.repositories
 
 import androidx.lifecycle.LiveData
 import org.sopt.anshim.data.models.db.FriendInfo
-import org.sopt.anshim.data.models.types.MBTI
-import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.data.models.types.Mbti
+import org.sopt.anshim.data.models.types.MbtiFeatures
 
 interface FriendRepository {
     fun getAll(): LiveData<List<FriendInfo>>
@@ -16,5 +16,5 @@ interface FriendRepository {
 
     suspend fun deleteAll()
 
-    fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures>
+    fun getMBTIFeatures(mbti: Mbti): List<MbtiFeatures>
 }

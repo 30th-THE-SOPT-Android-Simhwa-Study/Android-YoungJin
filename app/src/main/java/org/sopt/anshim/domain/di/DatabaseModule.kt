@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.sopt.anshim.data.models.db.FriendDAO
+import org.sopt.anshim.data.models.db.FriendDao
 import org.sopt.anshim.data.models.db.FriendDatabase
 import javax.inject.Singleton
 
@@ -25,7 +25,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun bindFriendDao(friendDatabase: FriendDatabase): FriendDAO {
-        return friendDatabase.friendDAO()
+    fun bindFriendDao(friendDatabase: FriendDatabase): FriendDao {
+        return friendDatabase.friendDao()
     }
 }

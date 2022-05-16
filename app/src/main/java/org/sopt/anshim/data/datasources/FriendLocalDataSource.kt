@@ -1,15 +1,15 @@
 package org.sopt.anshim.data.datasources
 
 import androidx.lifecycle.LiveData
-import org.sopt.anshim.data.models.db.FriendDAO
+import org.sopt.anshim.data.models.db.FriendDao
 import org.sopt.anshim.data.models.db.FriendInfo
-import org.sopt.anshim.data.models.types.MBTI
-import org.sopt.anshim.data.models.types.MBTIFeatures
+import org.sopt.anshim.data.models.types.Mbti
+import org.sopt.anshim.data.models.types.MbtiFeatures
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FriendLocalDataSource @Inject constructor(private val dao: FriendDAO) {
+class FriendLocalDataSource @Inject constructor(private val dao: FriendDao) {
     private val friends = dao.getAllFriends()
 
     fun getAll(): LiveData<List<FriendInfo>> {
@@ -32,27 +32,27 @@ class FriendLocalDataSource @Inject constructor(private val dao: FriendDAO) {
         dao.deleteAllFriends()
     }
 
-    fun getMBTIFeatures(mbti: MBTI): List<MBTIFeatures> {
+    fun getMbtiFeatures(mbti: Mbti): List<MbtiFeatures> {
         return when (mbti) {
-            MBTI.ISTJ -> listOf(MBTIFeatures.ISTJ1, MBTIFeatures.ISTJ2, MBTIFeatures.ISTJ3)
-            MBTI.ISTP -> listOf(MBTIFeatures.ISTP1, MBTIFeatures.ISTP2, MBTIFeatures.ISTP3)
-            MBTI.ISFJ -> listOf(MBTIFeatures.ISFJ1, MBTIFeatures.ISFJ2, MBTIFeatures.ISFJ3)
-            MBTI.ISFP -> listOf(MBTIFeatures.ISFP1, MBTIFeatures.ISFP2, MBTIFeatures.ISFP3)
+            Mbti.ISTJ -> listOf(MbtiFeatures.ISTJ1, MbtiFeatures.ISTJ2, MbtiFeatures.ISTJ3)
+            Mbti.ISTP -> listOf(MbtiFeatures.ISTP1, MbtiFeatures.ISTP2, MbtiFeatures.ISTP3)
+            Mbti.ISFJ -> listOf(MbtiFeatures.ISFJ1, MbtiFeatures.ISFJ2, MbtiFeatures.ISFJ3)
+            Mbti.ISFP -> listOf(MbtiFeatures.ISFP1, MbtiFeatures.ISFP2, MbtiFeatures.ISFP3)
 
-            MBTI.INTJ -> listOf(MBTIFeatures.INTJ1, MBTIFeatures.INTJ2, MBTIFeatures.INTJ3)
-            MBTI.INTP -> listOf(MBTIFeatures.INTP1, MBTIFeatures.INTP2, MBTIFeatures.INTP3)
-            MBTI.INFJ -> listOf(MBTIFeatures.INFJ1, MBTIFeatures.INFJ2, MBTIFeatures.INFJ3)
-            MBTI.INFP -> listOf(MBTIFeatures.INFP1, MBTIFeatures.INFP2, MBTIFeatures.INFP3)
+            Mbti.INTJ -> listOf(MbtiFeatures.INTJ1, MbtiFeatures.INTJ2, MbtiFeatures.INTJ3)
+            Mbti.INTP -> listOf(MbtiFeatures.INTP1, MbtiFeatures.INTP2, MbtiFeatures.INTP3)
+            Mbti.INFJ -> listOf(MbtiFeatures.INFJ1, MbtiFeatures.INFJ2, MbtiFeatures.INFJ3)
+            Mbti.INFP -> listOf(MbtiFeatures.INFP1, MbtiFeatures.INFP2, MbtiFeatures.INFP3)
 
-            MBTI.ESTJ -> listOf(MBTIFeatures.ESTJ1, MBTIFeatures.ESTJ2, MBTIFeatures.ESTJ3)
-            MBTI.ESTP -> listOf(MBTIFeatures.ESTP1, MBTIFeatures.ESTP2, MBTIFeatures.ESTP3)
-            MBTI.ESFJ -> listOf(MBTIFeatures.ESFJ1, MBTIFeatures.ESFJ2, MBTIFeatures.ESFJ3)
-            MBTI.ESFP -> listOf(MBTIFeatures.ESFP1, MBTIFeatures.ESFP2, MBTIFeatures.ESFP3)
+            Mbti.ESTJ -> listOf(MbtiFeatures.ESTJ1, MbtiFeatures.ESTJ2, MbtiFeatures.ESTJ3)
+            Mbti.ESTP -> listOf(MbtiFeatures.ESTP1, MbtiFeatures.ESTP2, MbtiFeatures.ESTP3)
+            Mbti.ESFJ -> listOf(MbtiFeatures.ESFJ1, MbtiFeatures.ESFJ2, MbtiFeatures.ESFJ3)
+            Mbti.ESFP -> listOf(MbtiFeatures.ESFP1, MbtiFeatures.ESFP2, MbtiFeatures.ESFP3)
 
-            MBTI.ENTJ -> listOf(MBTIFeatures.ENTJ1, MBTIFeatures.ENTJ2, MBTIFeatures.ENTJ3)
-            MBTI.ENFJ -> listOf(MBTIFeatures.ENFJ1, MBTIFeatures.ENFJ2, MBTIFeatures.ENFJ3)
-            MBTI.ENTP -> listOf(MBTIFeatures.ENTP1, MBTIFeatures.ENTP2, MBTIFeatures.ENTP3)
-            MBTI.ENFP -> listOf(MBTIFeatures.ENFP1, MBTIFeatures.ENFP2, MBTIFeatures.ENFP3)
+            Mbti.ENTJ -> listOf(MbtiFeatures.ENTJ1, MbtiFeatures.ENTJ2, MbtiFeatures.ENTJ3)
+            Mbti.ENFJ -> listOf(MbtiFeatures.ENFJ1, MbtiFeatures.ENFJ2, MbtiFeatures.ENFJ3)
+            Mbti.ENTP -> listOf(MbtiFeatures.ENTP1, MbtiFeatures.ENTP2, MbtiFeatures.ENTP3)
+            Mbti.ENFP -> listOf(MbtiFeatures.ENFP1, MbtiFeatures.ENFP2, MbtiFeatures.ENFP3)
         }
     }
 }

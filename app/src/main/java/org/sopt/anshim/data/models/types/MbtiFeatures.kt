@@ -2,7 +2,7 @@ package org.sopt.anshim.data.models.types
 
 import org.sopt.anshim.R
 
-enum class MBTIFeatures(val strRes: Int) {
+enum class MbtiFeatures(val strRes: Int) {
     ISTJ1(R.string.istj1), ISTJ2(R.string.istj2), ISTJ3(R.string.istj3),
     ISTP1(R.string.istp1), ISTP2(R.string.istp2), ISTP3(R.string.istp3),
     ISFJ1(R.string.isfj1), ISFJ2(R.string.isfj2), ISFJ3(R.string.isfj3),
