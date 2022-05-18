@@ -2,12 +2,11 @@ package org.sopt.anshim.data.models.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import org.sopt.anshim.domain.models.FriendInfo
 
 @Dao
-interface FriendDAO {
+interface FriendDao {
     @Insert
-    suspend fun insertFriend(friend: FriendInfo) : Long
+    suspend fun insertFriend(friend: FriendInfo): Long
 
     @Update
     suspend fun updateFriend(friend: FriendInfo)

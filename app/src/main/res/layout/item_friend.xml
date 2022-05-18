@@ -7,7 +7,7 @@
 
         <variable
             name="friendInfo"
-            type="org.sopt.anshim.domain.models.FriendInfo" />
+            type="org.sopt.anshim.data.models.db.FriendInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

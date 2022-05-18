@@ -3,6 +3,7 @@
     package="org.sopt.anshim">
 
     <application
+        android:name=".application.AnshimApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -17,7 +18,10 @@
             android:name=".presentation.home.screens.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.friend.FriendActivity"
+            android:name=".presentation.friend.screens.FriendDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.friend.screens.FriendActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

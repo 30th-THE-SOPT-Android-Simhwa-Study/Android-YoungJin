@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".presentation.friend.FriendActivity">
+    tools:context=".presentation.friend.screens.FriendActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="org.sopt.anshim.presentation.friend.FriendViewModel" />
+            type="org.sopt.anshim.presentation.friend.viewmodels.FriendViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,6 +96,20 @@
             app:layout_constraintStart_toStartOf="@id/guide_start"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
+        <EditText
+            android:id="@+id/mbti"
+            style="@style/Widget.EditText.Style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:hint="@string/mbti"
+            android:inputType="text"
+            android:onTextChanged="@{viewModel::onMBTITextChanged}"
+            android:text="@{viewModel.friendMBTI}"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            app:layout_constraintStart_toStartOf="@id/guide_start"
+            app:layout_constraintTop_toBottomOf="@id/email" />
+
         <Button
             android:id="@+id/save"
             style="@style/Widget.RoundButton.Style"
@@ -107,7 +121,7 @@
             android:text="@{context.getString(viewModel.updateMode == true ? R.string.update : R.string.save)}"
             app:layout_constraintEnd_toEndOf="@id/guide_end"
             app:layout_constraintStart_toStartOf="@id/guide_start"
-            app:layout_constraintTop_toBottomOf="@id/email"
+            app:layout_constraintTop_toBottomOf="@id/mbti"
             tools:text="@string/save" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -1,15 +1,17 @@
-package org.sopt.anshim.presentation.friend
+package org.sopt.anshim.presentation.friend.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.databinding.ItemFriendBinding
-import org.sopt.anshim.domain.models.FriendInfo
 
-class FriendListAdapter(private val clickListener: (FriendInfo) -> Unit) :
-    ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {
+class FriendListAdapter(
+    private val clickListener: (FriendInfo) -> Unit,
+    private val longClickListener: (FriendInfo) -> Boolean,
+) : ListAdapter<FriendInfo, FriendListAdapter.FriendHorizontalViewHolder>(diffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendHorizontalViewHolder {
         val binding = ItemFriendBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FriendHorizontalViewHolder(binding)
@@ -17,15 +19,20 @@ class FriendListAdapter(private val clickListener: (FriendInfo) -> Unit) :
 
     override fun onBindViewHolder(holder: FriendHorizontalViewHolder, position: Int) {
         val data = currentList[position]
-        holder.bind(data)
+        holder.bind(data, clickListener, longClickListener)
     }
 
-    inner class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
+    class FriendHorizontalViewHolder(private val binding: ItemFriendBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(friend: FriendInfo) {
+        fun bind(
+            friend: FriendInfo,
+            clickListener: (FriendInfo) -> Unit,
+            longClickListener: (FriendInfo) -> Boolean,
+        ) {
             binding.friendInfo = friend
-            binding.friendContainer.setOnClickListener {
-                clickListener(friend)
+            binding.friendContainer.apply {
+                setOnClickListener { clickListener(friend) }
+                setOnLongClickListener { longClickListener(friend) }
             }
         }
     }
