@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sopt.anshim">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.AnshimApplication"
         android:allowBackup="true"
@@ -11,7 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anshim">
         <activity
-            android:name="org.sopt.anshim.presentation.sign.screens.SignInActivity"
+            android:name=".presentation.lotto.LottoActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".presentation.sign.screens.SignInActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -22,13 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.friend.screens.FriendActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

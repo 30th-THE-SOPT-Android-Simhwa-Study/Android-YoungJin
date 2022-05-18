@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="org.sopt.anshim.presentation.lotto.LottoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".presentation.lotto.LottoActivity">
+
+        <TextView
+            android:id="@+id/lotto_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:layout_marginBottom="@dimen/spacingLarge"
+            android:fontFamily="@font/suit_b"
+            android:text="로또번호 생성기"
+            android:textColor="@color/gray_700"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/lotto_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/generation_lotto_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lotto_title">
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(0)}" />
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(1)}" />
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(2)}" />
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(3)}" />
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(4)}" />
+
+            <include
+                layout="@layout/item_lotto"
+                bind:lottoNum="@{viewModel.generatedLottoNumList.get(5)}" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_winning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:fontFamily="@font/suit_m"
+            android:gravity="center"
+            android:text="당첨 결과"
+            android:textColor="@color/gray_700"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lotto_container" />
+
+        <Button
+            android:id="@+id/generation_lotto_num"
+            style="@style/Widget.RoundButton.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacingBase"
+            android:layout_marginBottom="@dimen/spacingBase"
+            android:onClick="@{() -> viewModel.generateLottoNums()}"
+            android:text="로또 추첨"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
