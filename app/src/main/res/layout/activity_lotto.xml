@@ -24,17 +24,19 @@
             android:layout_marginTop="@dimen/spacingBase"
             android:layout_marginBottom="@dimen/spacingLarge"
             android:fontFamily="@font/suit_b"
-            android:text="로또번호 생성기"
+            android:text="당첨 결과조회"
             android:textColor="@color/gray_700"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1010회차 당첨 결과" />
 
         <LinearLayout
             android:id="@+id/lotto_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacingLarge"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/generation_lotto_num"
@@ -44,43 +46,75 @@
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(0)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(0)}" />
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(1)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(1)}" />
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(2)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(2)}" />
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(3)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(3)}" />
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(4)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(4)}" />
 
             <include
                 layout="@layout/item_lotto"
-                bind:lottoNum="@{viewModel.generatedLottoNumList.get(5)}" />
+                bind:lottoNum="@{viewModel.generatedLottoNums.get(5)}" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_winning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_m"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="@dimen/spacingMicro"
+            android:text="하단의 로또추첨 버튼을 눌러\n당첨 결과를 확인해 보세요!"
+            android:textColor="@color/gray_200"
+            android:textSize="@dimen/typographyBase"
+            android:visibility="@{viewModel.generatedLottoNums == null}"
+            app:layout_constraintBottom_toTopOf="@id/generation_lotto_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lotto_title"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/winning_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingLarge"
+            android:fontFamily="@font/suit_m"
+            android:gravity="center"
+            android:text="@{viewModel.resultMsg != null ? viewModel.resultMsg : ``}"
+            android:textColor="@color/gray_700"
+            android:textSize="@dimen/typographyBase"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lotto_container"
+            tools:text="당장 퇴사 갈기세요! 1️⃣등 축하드려요! 🥳🥳🎂" />
+
+        <TextView
+            android:id="@+id/winning_nums"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacingBase"
             android:fontFamily="@font/suit_m"
             android:gravity="center"
-            android:text="당첨 결과"
+            android:text="@{viewModel.winningLottoNums != null ? viewModel.round + `회차 ` + viewModel.winningLottoNums.toString() : ``}"
             android:textColor="@color/gray_700"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lotto_container" />
+            app:layout_constraintTop_toBottomOf="@id/winning_msg"
+            tools:text="1010회차 [9, 12, 15, 25, 34, 36, 3]" />
 
         <Button
             android:id="@+id/generation_lotto_num"
@@ -89,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacingBase"
             android:layout_marginBottom="@dimen/spacingBase"
-            android:onClick="@{() -> viewModel.generateLottoNums()}"
+            android:onClick="@{() -> viewModel.drawLotto()}"
             android:text="로또 추첨"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
