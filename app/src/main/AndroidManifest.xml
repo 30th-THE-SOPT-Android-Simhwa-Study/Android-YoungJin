@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.sopt.anshim">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".application.AnshimApplication"
         android:allowBackup="true"
@@ -22,10 +24,12 @@
             android:exported="false" />
         <activity
             android:name=".presentation.friend.screens.FriendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.github.GithubActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
