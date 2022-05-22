@@ -80,17 +80,16 @@ class LottoViewModel : ViewModel() {
     }
 
     private fun setWinningResult(winningNums: List<Int>, generatedNums: List<Int>) {
-        val diff = winningNums.toSet().minus(generatedNums)
-        var numOfCommonNums = winningNums.size - diff.size
+        var count = 0
+        for (index in 0..5) {
+            if (generatedNums.contains(winningNums[index])) count++
+        }
 
-        val isExistBonusNum = generatedNums.contains(winningNums[6])
-        if (isExistBonusNum) numOfCommonNums-- // 보너스 숫자를 제외하고 맞힌 숫자
-
-        resultMsg.value = when (numOfCommonNums) {
+        resultMsg.value = when (count) {
             3 -> "본전은 뽑았다!! 5️⃣등 축하드려요 🤭"
             4 -> "오늘 저녁은 치킨? 🍗 4️⃣등 축하드려요!"
             5 -> {
-                if (isExistBonusNum) "우와아 2️⃣등!️✌️ 축하드립니다!️" // 당첨번호 5개 숫자일치 + 보너스 숫자일치
+                if (generatedNums.contains(winningNums[6])) "우와아 2️⃣등!️✌️ 축하드립니다!️" // 당첨번호 5개 숫자일치 + 보너스 숫자일치
                 else "축하드립니다! 3️⃣등입니다 🏄🏻‍🏄🏻‍️🏄🏻‍️"
             }
             6 -> "당장 퇴사 갈기세요! 1️⃣등 축하드려요! 🥳🥳🎂"
