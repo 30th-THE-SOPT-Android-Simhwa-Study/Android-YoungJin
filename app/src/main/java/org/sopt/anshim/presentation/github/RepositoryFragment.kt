@@ -1,16 +1,19 @@
 package org.sopt.anshim.presentation.github
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import org.sopt.anshim.databinding.FragmentFollowerBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.sopt.anshim.databinding.FragmentRepositoryBinding
 import org.sopt.anshim.presentation.github.adapters.RepositoryListAdapter
 
@@ -45,9 +48,12 @@ class RepositoryFragment : Fragment() {
     }
 
     private fun addListeners() {
-        viewModel.getRepositories().observe(viewLifecycleOwner) {
-            Log.i(TAG, "addListeners: $it")
-            adapter.submitList(it.toMutableList())
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.repositories.collect {
+                    adapter.submitList(it?.toMutableList())
+                }
+            }
         }
     }
 

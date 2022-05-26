@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import org.sopt.anshim.databinding.ItemFollowerBinding
 import org.sopt.anshim.domain.models.github.FollowerInfo
 
-class FollowerListAdapter : ListAdapter<FollowerInfo, RecyclerView.ViewHolder>(diffCallback) {
+class FollowerListAdapter() : ListAdapter<FollowerInfo, RecyclerView.ViewHolder>(diffCallback) {
     class FollowerViewHolder(private val binding: ItemFollowerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(follower: FollowerInfo) {

@@ -1,5 +1,6 @@
 package org.sopt.anshim.data.repositories
 
+import kotlinx.coroutines.flow.Flow
 import org.sopt.anshim.data.datasources.GithubProfileRemoteDataSource
 import org.sopt.anshim.domain.models.github.FollowerInfo
 import org.sopt.anshim.domain.models.github.RepositoryInfo
@@ -9,9 +10,9 @@ import javax.inject.Inject
 class GithubProfileRepositoryImpl @Inject constructor(
     private val remoteDataSource: GithubProfileRemoteDataSource,
 ) : GithubProfileRepository {
-    override suspend fun fetchGithubFollowers(userName: String): List<FollowerInfo>? =
+    override fun fetchGithubFollowers(userName: String): Flow<List<FollowerInfo>?> =
         remoteDataSource.fetchFollowers(userName)
 
-    override suspend fun fetchGithubRepositories(userName: String): List<RepositoryInfo>? =
+    override fun fetchGithubRepositories(userName: String): Flow<List<RepositoryInfo>?> =
         remoteDataSource.fetchRepositories(userName)
 }

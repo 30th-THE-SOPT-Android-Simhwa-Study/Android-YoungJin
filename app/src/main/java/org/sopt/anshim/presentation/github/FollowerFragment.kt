@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.sopt.anshim.databinding.FragmentFollowerBinding
 import org.sopt.anshim.presentation.github.adapters.FollowerListAdapter
 
@@ -37,8 +42,12 @@ class FollowerFragment : Fragment() {
     }
 
     private fun addObservers() {
-        viewModel.getFollower().observe(viewLifecycleOwner) {
-            followerListAdapter.submitList(it?.toMutableList())
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.followers.collect {
+                    followerListAdapter.submitList(it?.toMutableList())
+                }
+            }
         }
     }
 

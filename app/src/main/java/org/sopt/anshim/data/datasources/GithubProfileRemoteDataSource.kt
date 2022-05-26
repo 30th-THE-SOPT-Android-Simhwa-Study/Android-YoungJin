@@ -1,35 +1,37 @@
 package org.sopt.anshim.data.datasources
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.sopt.anshim.data.services.GithubService
 import org.sopt.anshim.domain.models.github.FollowerInfo
 import org.sopt.anshim.domain.models.github.RepositoryInfo
 import javax.inject.Inject
 
 class GithubProfileRemoteDataSource @Inject constructor(private val githubService: GithubService) {
-    suspend fun fetchFollowers(userName: String): List<FollowerInfo>? {
-        runCatching {
-            githubService.getFollowerList(userName)
-        }.fold({
-            return it.body()?.map { follower ->
-                follower.toFollowerInfo(follower)
+    fun fetchFollowers(userName: String): Flow<List<FollowerInfo>?> {
+        return flow {
+            while (true) {
+                val followers = githubService.getFollowerList(userName).body()?.map { follower ->
+                    follower.toFollowerInfo(follower)
+                }
+                emit(followers)
+                delay(60000)
             }
-        }, {
-            it.printStackTrace()
-            return null
-        })
+        }
     }
 
-    suspend fun fetchRepositories(userName: String): List<RepositoryInfo>? {
-        runCatching {
-            githubService.getRepositoryList(userName)
-        }.fold({
-            return it.body()?.map { repository ->
-                repository.toRepositoryInfo(repository)
+    fun fetchRepositories(userName: String): Flow<List<RepositoryInfo>?> {
+        return flow {
+            while (true) {
+                val repositories =
+                    githubService.getRepositoryList(userName).body()?.map { repository ->
+                        repository.toRepositoryInfo(repository)
+                    }
+                emit(repositories)
+                delay(60000)
             }
-        }, {
-            it.printStackTrace()
-            return null
-        })
+        }
     }
 
     companion object {
