@@ -17,6 +17,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".presentation.sign.screens.SignInUsernameActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".presentation.home.screens.HomeActivity"
             android:exported="false" />
         <activity
@@ -24,14 +33,12 @@
             android:exported="false" />
         <activity
             android:name=".presentation.friend.screens.FriendActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".presentation.github.GithubActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.github.PushEventActivity"
             android:exported="false" />
     </application>
 

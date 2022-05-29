@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="push"
+            type="org.sopt.anshim.domain.models.github.PushEventSingleCommitInfo" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/repository_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/spacingBase"
+        android:paddingVertical="@dimen/spacingBase">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/author_profile"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:shapeableImageUrl="@{push.commit.author.profile}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Widget.CircleImageView.Half"
+            tools:src="@drawable/img_pearl" />
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacingSmall"
+            android:fontFamily="@font/suit_m"
+            android:text="@{push.commit.author.name}"
+            android:textColor="@color/gray_700"
+            android:textSize="@dimen/typographyBase"
+            app:layout_constraintBottom_toBottomOf="@+id/author_profile"
+            app:layout_constraintStart_toEndOf="@+id/author_profile"
+            app:layout_constraintTop_toTopOf="@+id/author_profile"
+            tools:text="youngjinc" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/org_profile"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="@dimen/spacingMedium"
+            android:shapeableImageUrl="@{push.org.profile}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/author_profile"
+            app:shapeAppearanceOverlay="@style/Widget.CircleImageView.16"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacingSmall"
+            android:fontFamily="@font/suit_r"
+            android:text="@{push.org.name}"
+            android:textColor="@color/gray_400"
+            android:textSize="@dimen/typographyDescription"
+            app:layout_constraintBottom_toBottomOf="@+id/org_profile"
+            app:layout_constraintStart_toEndOf="@+id/org_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/org_profile"
+            tools:text="SOPT-30th-Team12-Melon" />
+
+        <TextView
+            android:id="@+id/commit_message"
+            style="@style/Widget.Description.Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingSmall"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{push.commit.message}"
+            android:textColor="@color/gray_700"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="[refactor] Navigation Component 적용" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

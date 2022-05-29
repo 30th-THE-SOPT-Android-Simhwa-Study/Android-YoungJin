@@ -10,6 +10,7 @@ import java.util.regex.Pattern
 
 class SignViewModel : ViewModel() {
     private var userInfo: UserInfo? = null
+    val userName = MutableLiveData<String>()
     private val userEmail = MutableLiveData<String>()
     private val userPassword = MutableLiveData<String>()
     private val isValidEmail = MutableLiveData<Boolean>()
@@ -32,6 +33,10 @@ class SignViewModel : ViewModel() {
 
         // TODO implement login process
         isCompletedSignIn.value = true
+    }
+
+    fun onUserNameTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        userName.value = s.toString().trim()
     }
 
     fun onEmailTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {

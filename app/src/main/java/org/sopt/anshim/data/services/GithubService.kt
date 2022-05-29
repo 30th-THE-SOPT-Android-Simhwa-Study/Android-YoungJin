@@ -1,6 +1,7 @@
 package org.sopt.anshim.data.services
 
 import org.sopt.anshim.data.models.github.ResponseFollower
+import org.sopt.anshim.data.models.github.ResponsePushEvent
 import org.sopt.anshim.data.models.github.ResponseRepository
 import org.sopt.anshim.data.models.github.ResponseUser
 import retrofit2.Response
@@ -16,4 +17,7 @@ interface GithubService {
 
     @GET("users/{username}")
     suspend fun getUserInfo(@Path("username") userName: String): Response<ResponseUser>
+
+    @GET("users/{username}/received_events")
+    suspend fun getEventInfo(@Path("username") userName: String): Response<List<ResponsePushEvent>>
 }
