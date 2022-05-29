@@ -8,6 +8,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityGithubBinding
+import org.sopt.anshim.domain.models.UserInfo
 import org.sopt.anshim.presentation.github.adapters.GithubAdapter
 import org.sopt.anshim.presentation.types.GithubDetailViewType
 
@@ -27,6 +28,10 @@ class GithubActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        (intent?.getParcelableExtra(ARG_USER_INFO) as? UserInfo)?.let { user ->
+            viewModel.setUserName(user.name)
+        }
+
         initLayout()
     }
 
@@ -43,5 +48,6 @@ class GithubActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "GithubFragment"
+        private const val ARG_USER_INFO = "userInfo"
     }
 }

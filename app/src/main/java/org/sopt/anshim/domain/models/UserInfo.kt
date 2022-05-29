@@ -6,6 +6,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class UserInfo(
     val name: String,
-    val mbti: String,
-    val email: String
+    val mbti: String? = null,
+    val email: String,
+    val profile: String? = null,
+    val location: String? = null
 ) : Parcelable
