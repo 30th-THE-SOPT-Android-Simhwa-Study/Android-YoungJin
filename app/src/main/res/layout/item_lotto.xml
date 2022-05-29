@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="org.sopt.anshim.R" />
+
+        <variable
+            name="lottoNum"
+            type="org.sopt.anshim.presentation.types.LottoNumViewType" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="@dimen/spacingMicro"
+        android:background="@drawable/shape_border_radius_28"
+        android:backgroundTint="@{lottoNum != null ? context.getColor(lottoNum.getColor()) : context.getColor(R.color.white)}"
+        android:gravity="center"
+        tools:backgroundTint="@color/hot_pink">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_b"
+            android:text="@{Integer.toString(lottoNum != null ? lottoNum.ordinal() : 0)}"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="7" />
+    </LinearLayout>
+</layout>
