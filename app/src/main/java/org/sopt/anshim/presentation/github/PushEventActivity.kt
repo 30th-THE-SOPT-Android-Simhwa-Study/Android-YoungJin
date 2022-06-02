@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -31,7 +33,13 @@ class PushEventActivity : AppCompatActivity() {
     }
 
     private fun initLayout() {
-        binding.pushEventList.adapter = pushEventListAdapter
+        binding.pushEventList.apply {
+            adapter = pushEventListAdapter
+            val dividerItemDecoration =
+                DividerItemDecoration(context,
+                    LinearLayoutManager(context).orientation)
+            addItemDecoration(dividerItemDecoration) // TODO BindingAdapter에서 처리하기
+        }
     }
 
     private fun addObservers() {
