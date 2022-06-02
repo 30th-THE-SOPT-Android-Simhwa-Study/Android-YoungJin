@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -19,7 +19,7 @@ import org.sopt.anshim.presentation.github.adapters.FollowerListAdapter
 class FollowerFragment : Fragment() {
     private var _binding: FragmentFollowerBinding? = null
     val binding get() = _binding!!
-    private val viewModel: GithubViewModel by viewModels()
+    private val viewModel: GithubViewModel by activityViewModels()
     private val followerListAdapter = FollowerListAdapter()
 
     override fun onCreateView(
