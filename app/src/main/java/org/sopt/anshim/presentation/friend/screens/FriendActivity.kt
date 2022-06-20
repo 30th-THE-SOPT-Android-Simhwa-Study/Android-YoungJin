@@ -9,8 +9,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
 import org.sopt.anshim.data.models.db.FriendInfo
 import org.sopt.anshim.databinding.ActivityFriendBinding
+import org.sopt.anshim.domain.models.UserInfo
 import org.sopt.anshim.presentation.friend.adapters.FriendListAdapter
 import org.sopt.anshim.presentation.friend.viewmodels.FriendViewModel
+import org.sopt.anshim.presentation.github.GithubActivity
 
 @AndroidEntryPoint
 class FriendActivity : AppCompatActivity() {
@@ -40,9 +42,8 @@ class FriendActivity : AppCompatActivity() {
     }
 
     private fun onItemClick(friend: FriendInfo) {
-        if (friend.mbti == null) return
-        val intent = Intent(this, FriendDetailActivity::class.java).apply {
-            putExtra(ARG_FRIEND_INFO, friend)
+        val intent = Intent(this, GithubActivity::class.java).apply {
+            putExtra(ARG_USER_INFO, UserInfo(friend.name, friend.mbti?.name, friend.email))
         }
         startActivity(intent)
     }
@@ -54,6 +55,6 @@ class FriendActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "FriendActivity"
-        private const val ARG_FRIEND_INFO = "friendInfo"
+        private const val ARG_USER_INFO = "userInfo"
     }
 }

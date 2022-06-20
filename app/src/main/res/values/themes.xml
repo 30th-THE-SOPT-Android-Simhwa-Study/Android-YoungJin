@@ -71,4 +71,36 @@
         <item name="android:fontFamily">@font/suit_sb</item>
     </style>
 
+    <style name="Widget.Description.Style" parent="">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textAppearance">@style/Widget.Description.TextAppearance</item>
+    </style>
+
+    <style name="Widget.Description.TextAppearance" parent="">
+        <item name="android:textSize">@dimen/typographyDescription</item>
+        <item name="android:textColor">@color/gray_400</item>
+        <item name="android:fontFamily">@font/suit_r</item>
+    </style>
+
+    <!-- Github -->
+    <style name="Home.TabItem.TextAppearance.Style" parent="">
+        <item name="android:textSize">@dimen/typographyDescription</item>
+        <item name="android:fontFamily">@font/suit_sb</item>
+    </style>
+
+    <!-- Circle Image View -->
+    <style name="Widget.CircleImageView.5" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">5%</item>
+    </style>
+
+    <style name="Widget.CircleImageView.16" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16%</item>
+    </style>
+
+    <style name="Widget.CircleImageView.Half" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

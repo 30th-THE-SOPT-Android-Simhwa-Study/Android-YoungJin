@@ -17,4 +17,6 @@
     <dimen name="typographyDescription">14sp</dimen>
     <dimen name="typographyBase">16sp</dimen>
 
+    <!-- Widget -->
+    <dimen name="HeightTabItem">32dp</dimen>
 </resources>

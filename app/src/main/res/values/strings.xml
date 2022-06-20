@@ -87,4 +87,11 @@
     <string name="enfp1">표정 밝음</string>
     <string name="enfp2">통찰력 있음</string>
     <string name="enfp3">언어표현 잘함</string>
+
+    <!-- Github -->
+    <string name="github_username">유저이름</string>
+    <string name="github_detail_follower">Followers</string>
+    <string name="github_detail_repository">Repositories</string>
+    <string name="github_push_list_title">푸시 이벤트 목록</string>
+    <string name="sign_github_username_detail">깃허브 username을 입력해 주세요.</string>
 </resources>
