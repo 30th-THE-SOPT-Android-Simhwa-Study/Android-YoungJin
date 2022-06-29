@@ -43,6 +43,9 @@
         <activity
             android:name=".presentation.github.PushEventActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.WorkManagerActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
