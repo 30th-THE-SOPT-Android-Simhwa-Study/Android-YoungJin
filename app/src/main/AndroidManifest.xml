@@ -43,6 +43,9 @@
             android:name=".presentation.github.GithubActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.gallery.GalleryActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.github.PushEventActivity"
             android:exported="false" />
         <activity
