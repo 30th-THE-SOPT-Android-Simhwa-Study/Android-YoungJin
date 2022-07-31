@@ -25,9 +25,10 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/profile_image"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_marginTop="@dimen/spacingBase"
+                android:scaleType="centerCrop"
                 android:shapeableImageUrl="@{viewModel.userInfo.profile}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
