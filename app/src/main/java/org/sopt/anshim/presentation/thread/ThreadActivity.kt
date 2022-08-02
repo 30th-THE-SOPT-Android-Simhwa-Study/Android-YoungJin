@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityThreadBinding
@@ -51,7 +52,7 @@ class ThreadActivity : AppCompatActivity() {
                     // UI 작업
                     msg.data.getString(ARG_IMAGE)?.let {
                         val bitmap = ConvertBitmap().stringToBitmap(it)
-                        imageView.setImageBitmap(bitmap)
+                        imageView.load(bitmap)
                     }
                 }
                 3 -> {
