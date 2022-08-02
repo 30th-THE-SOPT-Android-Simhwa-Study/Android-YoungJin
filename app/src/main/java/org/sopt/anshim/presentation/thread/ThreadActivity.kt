@@ -28,7 +28,7 @@ class ThreadActivity : AppCompatActivity() {
                     it.lifecycleOwner = this@ThreadActivity
                 }
 
-        myHandler = MyHandler(viewModel::setImage, viewModel::setCount)
+        myHandler = MyHandler(viewModel::setImage, viewModel::setCount, viewModel::setLoadingState)
         handlerThread = HandlerThread("HandlerThread-1")
         handlerThread.start()
 
@@ -51,6 +51,7 @@ class ThreadActivity : AppCompatActivity() {
     class MyHandler(
         private val setImage: (Bitmap) -> (Unit),
         private val setCount: (Int) -> (Unit),
+        private val setLoadingState: (Boolean) -> (Unit),
     ) :
         Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
@@ -67,31 +68,39 @@ class ThreadActivity : AppCompatActivity() {
                 }
             }
         }
+
+        fun changeLoadingState(isLoading: Boolean) {
+            setLoadingState(isLoading)
+        }
     }
 
     class Image1Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 1
+            myHandler.changeLoadingState(true)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/48701368?v=4")
             val msg = myHandler.obtainMessage().apply {
                 data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 1
             }
-            sleep(1000L)
+            sleep(2000L)
             myHandler.sendMessage(msg)
+            myHandler.changeLoadingState(false)
         }
     }
 
     class Image2Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 2
+            myHandler.changeLoadingState(true)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/62291759?v=4")
             val msg = myHandler.obtainMessage().apply {
                 data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 2
             }
-            sleep(1000L)
+            sleep(2000L)
             myHandler.sendMessage(msg)
+            myHandler.changeLoadingState(false)
         }
     }
 

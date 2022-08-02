@@ -94,4 +94,7 @@
     <string name="github_detail_repository">Repositories</string>
     <string name="github_push_list_title">푸시 이벤트 목록</string>
     <string name="sign_github_username_detail">깃허브 username을 입력해 주세요.</string>
+
+    <!-- Thread -->
+    <string name="thread_count_guide">이미지를 클릭해 보세요!</string>
 </resources>

@@ -18,9 +18,10 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/profile_image"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="@dimen/spacingBase"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="48dp"
+            android:invisibility="@{viewModel.isLoading()}"
             android:src="@drawable/img_rabbit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -28,8 +29,23 @@
             app:shapeAppearanceOverlay="@style/Widget.CircleImageView.Half"
             app:shapeableBitmap="@{viewModel.image}" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_lottie"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.isLoading()}"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            app:layout_constraintEnd_toEndOf="@id/profile_image"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toTopOf="@id/profile_image"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="lottie/loading.json"
+            app:lottie_imageAssetsFolder="lottie"
+            app:lottie_loop="true"
+            tools:visibility="gone" />
+
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/count"
             style="@style/Widget.ToolbarTitle.TextAppearance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,14 +57,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_image"
-            tools:text="youngjinc" />
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/count_guide"
+            style="@style/Widget.Description.Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingSmall"
+            android:text="@string/thread_count_guide"
+            android:visibility="@{viewModel.count == null}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/count" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacingLarge"
             android:paddingHorizontal="@dimen/spacingBase"
-            app:layout_constraintTop_toBottomOf="@id/name">
+            app:layout_constraintTop_toBottomOf="@id/count_guide">
 
             <Button
                 android:id="@+id/image1"
@@ -57,8 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacingSmall"
                 android:paddingHorizontal="@dimen/spacingLarge"
-
-                android:text="image1"
+                android:text="Image1"
                 app:layout_constraintEnd_toStartOf="@id/image2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +96,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/spacingLarge"
-                android:text="image2"
+                android:text="Image2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/image1"
                 app:layout_constraintTop_toTopOf="parent" />
