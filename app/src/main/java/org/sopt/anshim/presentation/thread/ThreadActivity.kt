@@ -1,12 +1,11 @@
 package org.sopt.anshim.presentation.thread
 
+import android.graphics.Bitmap
 import android.os.*
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityThreadBinding
@@ -16,14 +15,20 @@ import org.sopt.anshim.util.getBitmapFromURL
 @AndroidEntryPoint
 class ThreadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThreadBinding
+    private val viewModel: ThreadViewModel by viewModels()
     lateinit var handlerThread: HandlerThread
     private lateinit var myHandler: MyHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_thread)
+        binding =
+            DataBindingUtil.setContentView<ActivityThreadBinding?>(this, R.layout.activity_thread)
+                .also {
+                    it.viewModel = viewModel
+                    it.lifecycleOwner = this@ThreadActivity
+                }
 
-        myHandler = MyHandler(binding.profileImage, binding.name)
+        myHandler = MyHandler(viewModel::setImage, viewModel::setCount)
         handlerThread = HandlerThread("HandlerThread-1")
         handlerThread.start()
 
@@ -43,7 +48,10 @@ class ThreadActivity : AppCompatActivity() {
         }
     }
 
-    class MyHandler(private val imageView: ImageView, private val textView: TextView) :
+    class MyHandler(
+        private val setImage: (Bitmap) -> (Unit),
+        private val setCount: (Int) -> (Unit),
+    ) :
         Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             // 다른 Thread에서 전달받은 Message 처리
@@ -51,12 +59,11 @@ class ThreadActivity : AppCompatActivity() {
                 1, 2 -> {
                     // UI 작업
                     msg.data.getString(ARG_IMAGE)?.let {
-                        val bitmap = ConvertBitmap().stringToBitmap(it)
-                        imageView.load(bitmap)
+                        setImage(ConvertBitmap().stringToBitmap(it) ?: return@let)
                     }
                 }
                 3 -> {
-                    textView.text = msg.data.getInt(ARG_COUNT).toString()
+                    setCount(msg.data.getInt(ARG_COUNT))
                 }
             }
         }
@@ -70,6 +77,7 @@ class ThreadActivity : AppCompatActivity() {
                 data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 1
             }
+            sleep(1000L)
             myHandler.sendMessage(msg)
         }
     }
@@ -82,6 +90,7 @@ class ThreadActivity : AppCompatActivity() {
                 data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 2
             }
+            sleep(1000L)
             myHandler.sendMessage(msg)
         }
     }

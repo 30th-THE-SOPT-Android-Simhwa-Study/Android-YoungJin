@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="org.sopt.anshim.presentation.github.GithubViewModel" />
+            type="org.sopt.anshim.presentation.thread.ThreadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/Widget.CircleImageView.Half" />
+            app:shapeAppearanceOverlay="@style/Widget.CircleImageView.Half"
+            app:shapeableBitmap="@{viewModel.image}" />
 
         <TextView
             android:id="@+id/name"
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacingBase"
             android:fontFamily="@font/suit_b"
+            android:text="@{Integer.toString(viewModel.count)}"
             android:textColor="@color/gray_700"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/spacingSmall"
                 android:paddingHorizontal="@dimen/spacingLarge"
+
                 android:text="image1"
                 app:layout_constraintEnd_toStartOf="@id/image2"
                 app:layout_constraintStart_toStartOf="parent"
