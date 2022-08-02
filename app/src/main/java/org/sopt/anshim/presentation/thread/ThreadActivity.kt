@@ -1,6 +1,8 @@
 package org.sopt.anshim.presentation.thread
 
 import android.os.*
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
@@ -14,13 +16,13 @@ import org.sopt.anshim.util.getBitmapFromURL
 class ThreadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityThreadBinding
     lateinit var handlerThread: HandlerThread
-    val myHandler = MyHandler()
-    var count = 0
+    private lateinit var myHandler: MyHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_thread)
 
+        myHandler = MyHandler(binding.profileImage, binding.name)
         handlerThread = HandlerThread("HandlerThread-1")
         handlerThread.start()
 
@@ -29,17 +31,18 @@ class ThreadActivity : AppCompatActivity() {
 
     private fun initLayout() {
         binding.image1.setOnClickListener {
-            BackgroundThread1().start()
+            Image1Thread(myHandler).start()
         }
         binding.image2.setOnClickListener {
-            BackgroundThread2().start()
+            Image2Thread(myHandler).start()
         }
         binding.profileImage.setOnClickListener {
-            BackgroundThread3().start()
+            CountThread(myHandler).start()
         }
     }
 
-    inner class MyHandler : Handler(Looper.getMainLooper()) {
+    class MyHandler(private val imageView: ImageView, private val textView: TextView) :
+        Handler(Looper.getMainLooper()) {
         override fun handleMessage(msg: Message) {
             // 다른 Thread에서 전달받은 Message 처리
             when (msg.what) {
@@ -47,17 +50,17 @@ class ThreadActivity : AppCompatActivity() {
                     // UI 작업
                     msg.data.getString(ARG_IMAGE)?.let {
                         val bitmap = ConvertBitmap().stringToBitmap(it)
-                        binding.profileImage.setImageBitmap(bitmap)
+                        imageView.setImageBitmap(bitmap)
                     }
                 }
                 3 -> {
-                    binding.name.text = msg.data.getInt(ARG_COUNT).toString()
+                    textView.text = msg.data.getInt(ARG_COUNT).toString()
                 }
             }
         }
     }
 
-    inner class BackgroundThread1 : Thread() {
+    class Image1Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 1
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/48701368?v=4")
@@ -69,7 +72,7 @@ class ThreadActivity : AppCompatActivity() {
         }
     }
 
-    inner class BackgroundThread2 : Thread() {
+    class Image2Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 2
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/62291759?v=4")
@@ -81,25 +84,24 @@ class ThreadActivity : AppCompatActivity() {
         }
     }
 
-    inner class BackgroundThread3 : Thread() {
+    class CountThread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Count
-            if (isAlive) {
-                while (true) {
-                    val msg = myHandler.obtainMessage().apply {
-                        data = bundleOf(ARG_COUNT to count)
-                        what = 3
-                    }
-                    count++
-                    sleep(1000L)
-                    myHandler.sendMessage(msg)
+            if (!isAlive) return
+            var count = 0
+            while (true) {
+                val msg = myHandler.obtainMessage().apply {
+                    data = bundleOf(ARG_COUNT to count)
+                    what = 3
                 }
+                count++
+                sleep(1000L)
+                myHandler.sendMessage(msg)
             }
         }
     }
 
     companion object {
-        private const val TAG = "GithubFragment"
         private const val ARG_IMAGE = "image"
         private const val ARG_COUNT = "count"
     }
