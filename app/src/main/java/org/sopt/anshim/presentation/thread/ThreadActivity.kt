@@ -38,6 +38,7 @@ class ThreadActivity : AppCompatActivity() {
         }
         binding.profileImage.setOnClickListener {
             CountThread(myHandler).start()
+            it.isEnabled = false // CountThread가 한번만 start 되도록 하기 위함
         }
     }
 
