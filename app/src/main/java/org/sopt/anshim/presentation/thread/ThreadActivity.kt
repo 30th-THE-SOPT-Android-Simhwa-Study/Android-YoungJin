@@ -54,7 +54,7 @@ class ThreadActivity : AppCompatActivity() {
         private val setLoadingState: (ProgressState) -> (Unit),
     ) :
         Handler(Looper.getMainLooper()) {
-        private var loadingState = ProgressState.IDLE
+        private var progressState = ProgressState.IDLE
 
         override fun handleMessage(msg: Message) {
             // 다른 Thread에서 전달받은 Message 처리
@@ -63,7 +63,7 @@ class ThreadActivity : AppCompatActivity() {
                     // UI 작업
                     (msg.obj as? String)?.let {
                         setImage(ConvertBitmap().stringToBitmap(it) ?: return@let)
-                        changeLoadingState(ProgressState.IDLE)
+                        changeProgressState(ProgressState.IDLE)
                     }
                 }
                 3 -> {
@@ -72,21 +72,19 @@ class ThreadActivity : AppCompatActivity() {
             }
         }
 
-        fun changeLoadingState(state: ProgressState) {
-            loadingState = state
+        fun changeProgressState(state: ProgressState) {
+            progressState = state
             setLoadingState(state)
         }
 
-        fun getProgressState(): ProgressState {
-            return loadingState
-        }
+        fun getProgressState(): ProgressState = progressState
     }
 
     class Image1Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 1
             if (myHandler.getProgressState() == ProgressState.IN_PROGRESS) return
-            myHandler.changeLoadingState(ProgressState.IN_PROGRESS)
+            myHandler.changeProgressState(ProgressState.IN_PROGRESS)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/48701368?v=4")
             val msg = myHandler.obtainMessage().apply {
                 what = 1
@@ -101,7 +99,7 @@ class ThreadActivity : AppCompatActivity() {
         override fun run() {
             // Implement Image 2
             if (myHandler.getProgressState() == ProgressState.IN_PROGRESS) return
-            myHandler.changeLoadingState(ProgressState.IN_PROGRESS)
+            myHandler.changeProgressState(ProgressState.IN_PROGRESS)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/62291759?v=4")
             val msg = myHandler.obtainMessage().apply {
                 what = 2
@@ -127,10 +125,5 @@ class ThreadActivity : AppCompatActivity() {
                 myHandler.sendMessage(msg)
             }
         }
-    }
-
-    companion object {
-        private const val ARG_IMAGE = "image"
-        private const val ARG_COUNT = "count"
     }
 }
