@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import android.os.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
@@ -59,12 +58,12 @@ class ThreadActivity : AppCompatActivity() {
             when (msg.what) {
                 1, 2 -> {
                     // UI 작업
-                    msg.data.getString(ARG_IMAGE)?.let {
+                    (msg.obj as? String)?.let {
                         setImage(ConvertBitmap().stringToBitmap(it) ?: return@let)
                     }
                 }
                 3 -> {
-                    setCount(msg.data.getInt(ARG_COUNT))
+                    setCount(msg.obj as? Int ?: return)
                 }
             }
         }
@@ -80,8 +79,8 @@ class ThreadActivity : AppCompatActivity() {
             myHandler.changeLoadingState(true)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/48701368?v=4")
             val msg = myHandler.obtainMessage().apply {
-                data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 1
+                bitmap?.let { obj = ConvertBitmap().bitmapToString(it) }
             }
             sleep(2000L)
             myHandler.sendMessage(msg)
@@ -95,8 +94,8 @@ class ThreadActivity : AppCompatActivity() {
             myHandler.changeLoadingState(true)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/62291759?v=4")
             val msg = myHandler.obtainMessage().apply {
-                data = bundleOf(ARG_IMAGE to ConvertBitmap().bitmapToString(bitmap ?: return))
                 what = 2
+                bitmap?.let { obj = ConvertBitmap().bitmapToString(it) }
             }
             sleep(2000L)
             myHandler.sendMessage(msg)
@@ -111,7 +110,7 @@ class ThreadActivity : AppCompatActivity() {
             var count = 0
             while (true) {
                 val msg = myHandler.obtainMessage().apply {
-                    data = bundleOf(ARG_COUNT to count)
+                    obj = count
                     what = 3
                 }
                 count++
