@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityThreadBinding
+import org.sopt.anshim.presentation.types.ProgressState
 import org.sopt.anshim.util.ConvertBitmap
 import org.sopt.anshim.util.getBitmapFromURL
 
@@ -50,9 +51,11 @@ class ThreadActivity : AppCompatActivity() {
     class MyHandler(
         private val setImage: (Bitmap) -> (Unit),
         private val setCount: (Int) -> (Unit),
-        private val setLoadingState: (Boolean) -> (Unit),
+        private val setLoadingState: (ProgressState) -> (Unit),
     ) :
         Handler(Looper.getMainLooper()) {
+        private var loadingState = ProgressState.IDLE
+
         override fun handleMessage(msg: Message) {
             // 다른 Thread에서 전달받은 Message 처리
             when (msg.what) {
@@ -60,6 +63,7 @@ class ThreadActivity : AppCompatActivity() {
                     // UI 작업
                     (msg.obj as? String)?.let {
                         setImage(ConvertBitmap().stringToBitmap(it) ?: return@let)
+                        changeLoadingState(ProgressState.IDLE)
                     }
                 }
                 3 -> {
@@ -68,15 +72,21 @@ class ThreadActivity : AppCompatActivity() {
             }
         }
 
-        fun changeLoadingState(isLoading: Boolean) {
-            setLoadingState(isLoading)
+        fun changeLoadingState(state: ProgressState) {
+            loadingState = state
+            setLoadingState(state)
+        }
+
+        fun getProgressState(): ProgressState {
+            return loadingState
         }
     }
 
     class Image1Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 1
-            myHandler.changeLoadingState(true)
+            if (myHandler.getProgressState() == ProgressState.IN_PROGRESS) return
+            myHandler.changeLoadingState(ProgressState.IN_PROGRESS)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/48701368?v=4")
             val msg = myHandler.obtainMessage().apply {
                 what = 1
@@ -84,14 +94,14 @@ class ThreadActivity : AppCompatActivity() {
             }
             sleep(2000L)
             myHandler.sendMessage(msg)
-            myHandler.changeLoadingState(false)
         }
     }
 
     class Image2Thread(private val myHandler: MyHandler) : Thread() {
         override fun run() {
             // Implement Image 2
-            myHandler.changeLoadingState(true)
+            if (myHandler.getProgressState() == ProgressState.IN_PROGRESS) return
+            myHandler.changeLoadingState(ProgressState.IN_PROGRESS)
             val bitmap = getBitmapFromURL("https://avatars.githubusercontent.com/u/62291759?v=4")
             val msg = myHandler.obtainMessage().apply {
                 what = 2
@@ -99,7 +109,6 @@ class ThreadActivity : AppCompatActivity() {
             }
             sleep(2000L)
             myHandler.sendMessage(msg)
-            myHandler.changeLoadingState(false)
         }
     }
 
