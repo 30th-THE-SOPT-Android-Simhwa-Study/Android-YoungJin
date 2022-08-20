@@ -22,9 +22,7 @@ object MusicNotification {
 
     @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("UnspecifiedImmutableFlag")
-    fun createNotification(
-        context: Context,
-    ): Notification {
+    fun createNotification(context: Context, title: String?): Notification {
         val notificationIntent = Intent(context, ServiceActivity::class.java)
         notificationIntent.action = MAIN
         notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
@@ -60,7 +58,7 @@ object MusicNotification {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle("Music Player")
-            .setContentText("My Music")
+            .setContentText(title)
             .setSmallIcon(R.drawable.ic_launcher_background)
             .setOngoing(true) // true 일경우 알림 리스트에서 클릭하거나 좌우로 드래그해도 사라지지 않음
             .addAction(

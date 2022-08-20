@@ -1,5 +1,6 @@
 package org.sopt.anshim.presentation.component
 
+import android.app.Notification
 import android.app.Service
 import android.content.Intent
 import android.media.MediaPlayer
@@ -8,6 +9,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
 import org.sopt.anshim.R
+import org.sopt.anshim.domain.models.Music
 import org.sopt.anshim.util.Actions.NEXT
 import org.sopt.anshim.util.Actions.PLAY
 import org.sopt.anshim.util.Actions.PREV
@@ -16,12 +18,15 @@ import org.sopt.anshim.util.Actions.STOP_FOREGROUND
 
 class MusicPlayerService : Service() {
     private var player: MediaPlayer? = null
-    private var music = intArrayOf(R.raw.sample_1, R.raw.sample_2, R.raw.sample_3)
+    private var music = listOf(Music("sample_1", R.raw.sample_1),
+        Music("sample_2", R.raw.sample_2),
+        Music("sample_3", R.raw.sample_3))
+    private var notification: Notification? = null
     private var pos = 0
 
     override fun onCreate() {
         super.onCreate()
-        player = MediaPlayer.create(this, music[pos])
+        player = MediaPlayer.create(this, music[pos].song)
         player?.isLooping = true
     }
 
@@ -29,7 +34,7 @@ class MusicPlayerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             START_FOREGROUND -> {
-                Log.d(TAG, "START_FOREGROUND")
+                Log.d(TAG, "START_FOREGROUND") // TODO Timber 커스텀
                 startForegroundService()
             }
 
@@ -65,7 +70,7 @@ class MusicPlayerService : Service() {
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun startForegroundService() {
-        val notification = MusicNotification.createNotification(this)
+        notification = MusicNotification.createNotification(this, null)
         startForeground(NOTIFICATION_ID, notification)
     }
 
@@ -84,11 +89,14 @@ class MusicPlayerService : Service() {
         stopMusic()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun playMusic(position: Int) {
         stopMusic()
         pos = position
-        player = MediaPlayer.create(this, music[pos])
+        player = MediaPlayer.create(this, music[pos].song)
         player?.start()
+        notification = MusicNotification.createNotification(this, music[pos].title)
+        startForeground(NOTIFICATION_ID, notification)
     }
 
     private fun stopMusic() {
