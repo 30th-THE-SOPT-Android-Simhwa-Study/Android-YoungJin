@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.telephony.SmsManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -50,7 +51,17 @@ class BroadCastActivity : AppCompatActivity() {
 
     private fun addListeners() {
         binding.btnSend.setOnClickListener {
-            // TODO implement
+            try {
+                val smsManager = SmsManager.getDefault()
+                smsManager.sendTextMessage(
+                    binding.phone.toString(),
+                    null,
+                    binding.content.toString(),
+                    null,
+                    null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -61,10 +72,12 @@ class BroadCastActivity : AppCompatActivity() {
     }
 
     private fun requirePerms() {
-        val permissions = arrayOf(Manifest.permission.RECEIVE_SMS)
-        val permissionCheck =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
-        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+        val permissions = arrayOf(Manifest.permission.RECEIVE_SMS, Manifest.permission.SEND_SMS)
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_DENIED || ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_DENIED
+        ) {
             ActivityCompat.requestPermissions(this, permissions, 1)
         }
     }
