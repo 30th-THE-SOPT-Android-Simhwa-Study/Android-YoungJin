@@ -43,7 +43,8 @@ class BroadCastActivity : AppCompatActivity() {
     private fun processedIntent(intent: Intent?) {
         intent?.let {
             binding.phone.setText(it.getStringExtra(ARG_PHONE_NUMBER))
-            binding.content.setText(it.getStringExtra(ARG_CONTENT))
+            val verificationCode = it.getStringExtra(ARG_CONTENT)?.replace("[^\\d]".toRegex(), "")
+            binding.content.setText(verificationCode)
         }
     }
 
