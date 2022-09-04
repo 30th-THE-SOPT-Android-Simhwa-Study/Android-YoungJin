@@ -4,7 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".application.AnshimApplication"
@@ -54,18 +58,37 @@
             android:exported="false" />
         <activity
             android:name=".presentation.thread.ThreadActivity"
-            android:exported="false"/>
-        <activity android:name=".presentation.component.ServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.component.ServiceActivity"
+            android:exported="false" />
+
+        <service
+            android:name="org.sopt.anshim.presentation.component.MusicPlayerService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="org.sopt.anshim.presentation.component.MusicPlayerService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".presentation.component.BroadCastActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name="org.sopt.anshim.presentation.component.MusicPlayerService"
+        <receiver
+            android:name=".presentation.component.SMSReceiver"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true"
+            android:permission="android.permission.BROADCAST_SMS">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
