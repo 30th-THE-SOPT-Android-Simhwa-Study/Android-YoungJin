@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.thread.ThreadActivity">
+
+    <data>
+
+        <import type="org.sopt.anshim.presentation.types.ProgressState" />
+
+        <variable
+            name="viewModel"
+            type="org.sopt.anshim.presentation.thread.ThreadViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="48dp"
+            android:invisibility="@{viewModel.isLoading() == ProgressState.IN_PROGRESS}"
+            android:src="@drawable/img_rabbit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/Widget.CircleImageView.Half"
+            app:shapeableBitmap="@{viewModel.image}" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loading_lottie"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.isLoading() == ProgressState.IN_PROGRESS}"
+            app:layout_constraintBottom_toBottomOf="@id/profile_image"
+            app:layout_constraintEnd_toEndOf="@id/profile_image"
+            app:layout_constraintStart_toStartOf="@id/profile_image"
+            app:layout_constraintTop_toTopOf="@id/profile_image"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="lottie/loading.json"
+            app:lottie_imageAssetsFolder="lottie"
+            app:lottie_loop="true"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/count"
+            style="@style/Widget.ToolbarTitle.TextAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingBase"
+            android:fontFamily="@font/suit_b"
+            android:text="@{Integer.toString(viewModel.count)}"
+            android:textColor="@color/gray_700"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile_image"
+            tools:text="0" />
+
+        <TextView
+            android:id="@+id/count_guide"
+            style="@style/Widget.Description.Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingSmall"
+            android:text="@string/thread_count_guide"
+            android:visibility="@{viewModel.count == null}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/count" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacingLarge"
+            android:paddingHorizontal="@dimen/spacingBase"
+            app:layout_constraintTop_toBottomOf="@id/count_guide">
+
+            <Button
+                android:id="@+id/image1"
+                style="@style/Widget.RoundButton.Style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacingSmall"
+                android:paddingHorizontal="@dimen/spacingLarge"
+                android:text="Image1"
+                app:layout_constraintEnd_toStartOf="@id/image2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/image2"
+                style="@style/Widget.RoundButton.Style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/spacingLarge"
+                android:text="Image2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/image1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
