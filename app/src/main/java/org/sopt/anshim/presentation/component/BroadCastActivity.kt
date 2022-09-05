@@ -6,10 +6,13 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.SmsManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityBroadcastBinding
+import org.sopt.anshim.util.ext.showToast
 
 class BroadCastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBroadcastBinding
@@ -54,11 +57,13 @@ class BroadCastActivity : AppCompatActivity() {
             try {
                 val smsManager = SmsManager.getDefault()
                 smsManager.sendTextMessage(
-                    binding.phone.toString(),
+                    binding.phone.text.toString(),
                     null,
-                    binding.content.toString(),
+                    binding.content.text.toString(),
                     null,
                     null)
+
+                showToast(getString(R.string.send_msg_toast))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

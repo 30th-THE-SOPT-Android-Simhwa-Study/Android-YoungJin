@@ -12,6 +12,9 @@
     <string name="delete">삭제</string>
     <string name="delete_all">전체 삭제</string>
 
+    <!-- Toast Msg -->
+    <string name="send_msg_toast">메세지를 전송했어요💌</string>
+
     <!-- Sign -->
     <string name="sign_in">로그인</string>
     <string name="sign_password">비밀번호</string>
