@@ -2,11 +2,9 @@ package org.sopt.anshim.presentation.component
 
 import android.Manifest
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.telephony.SmsManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,8 +14,6 @@ import org.sopt.anshim.util.ext.showToast
 
 class BroadCastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBroadcastBinding
-    private lateinit var br: SMSReceiver
-    private lateinit var filter: IntentFilter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,21 +23,6 @@ class BroadCastActivity : AppCompatActivity() {
         requirePerms()
         processedIntent(intent)
         addListeners()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        br = SMSReceiver()
-        filter = IntentFilter().apply {
-            addAction("org.sopt.anshim")
-        }
-        registerReceiver(br, filter)
-        super.onResume()
-    }
-
-    override fun onStop() {
-        unregisterReceiver(br)
-        super.onStop()
     }
 
     private fun processedIntent(intent: Intent?) {
