@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import org.sopt.anshim.R
 import org.sopt.anshim.databinding.ActivityBroadcastBinding
 import org.sopt.anshim.util.ext.showToast
+import timber.log.Timber
 
 class BroadCastActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBroadcastBinding
@@ -46,7 +47,7 @@ class BroadCastActivity : AppCompatActivity() {
 
                 showToast(getString(R.string.send_msg_toast))
             } catch (e: Exception) {
-                e.printStackTrace()
+                Timber.d(e.message)
             }
         }
     }
