@@ -100,4 +100,11 @@
 
     <!-- Thread -->
     <string name="thread_count_guide">이미지를 클릭해 보세요!</string>
+    <string name="title_activity_calendar">CalendarActivity</string>
+
+    <!-- Calendar -->
+    <string name="calendar_schedule_hangout">약속</string>
+    <string name="calendar_schedule_study">스터디</string>
+    <string name="calendar_schedule_exercise">운동</string>
+    <string name="calendar_schedule_meeting">미팅</string>
 </resources>
