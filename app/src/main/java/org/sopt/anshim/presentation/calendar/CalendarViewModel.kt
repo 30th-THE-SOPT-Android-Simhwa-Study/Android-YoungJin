@@ -10,6 +10,18 @@ import java.time.LocalDateTime
 
 class CalendarViewModel : ViewModel() {
     private lateinit var now: LocalDate
+    private val monthStrMap = mapOf(1 to "January",
+        2 to "February",
+        3 to "March",
+        4 to "April",
+        5 to "May",
+        6 to "June",
+        7 to "July",
+        8 to "August",
+        9 to "September",
+        10 to "October",
+        11 to "November",
+        12 to "December")
     private val _year = MutableLiveData<Int>()
     val year: LiveData<Int> get() = _year
     private val _month = MutableLiveData<Int>()
@@ -18,10 +30,12 @@ class CalendarViewModel : ViewModel() {
     val dayOfMonth: LiveData<Int> get() = _dayOfMonth
     private val _dayOfWeek = MutableLiveData<Int>()
     val dayOfWeek: LiveData<Int> get() = _dayOfWeek
-    private val _dates = MutableLiveData<Array<LocalDate?>>(Array(42) {null})
+    private val _dates = MutableLiveData<Array<LocalDate?>>(Array(42) { null })
     val dates: LiveData<Array<LocalDate?>> get() = _dates
     private val _schedules = MutableLiveData<List<ScheduleInfo>>()
     val schedules: LiveData<List<ScheduleInfo>> get() = _schedules
+    private val _calendarTitle = MutableLiveData<String>()
+    val calendarTitle: LiveData<String> get() = _calendarTitle
 
     init {
         fetchScheduleList()
@@ -98,6 +112,7 @@ class CalendarViewModel : ViewModel() {
         _month.value = now.month.value
         _dayOfMonth.value = now.dayOfMonth
         _dayOfWeek.value = now.dayOfWeek.value
+        _calendarTitle.value = "${monthStrMap[month.value]} ${year.value}" // TODO 리팩토링 필요
 
         val firstIdx = now.withDayOfMonth(1).dayOfWeek.value % 7
         val lastDay = now.withDayOfMonth(now.lengthOfMonth()).dayOfMonth

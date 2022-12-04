@@ -39,8 +39,8 @@ class CalendarActivity : ComponentActivity() {
             AnshimTheme {
                 viewModel.fetchCurrentMonthInfo()
                 // 추후 서버 통신을 고려한다면 dates는 항시 보여주되, schedules 존재 여부에 따라 뷰를 그려주면 될 듯
-                safeLet(viewModel.dates.value, viewModel.schedules.value) { date, schedules ->
-                    CalenderView(date, schedules)
+                safeLet(viewModel.calendarTitle.value, viewModel.dates.value, viewModel.schedules.value) { title, date, schedules ->
+                    CalenderView(title, date, schedules)
                 }
             }
         }
@@ -130,7 +130,7 @@ fun DatesView(dates: Array<LocalDate?>) {
 }
 
 @Composable
-fun CalenderView(dates: Array<LocalDate?>, schedules: List<ScheduleInfo>) {
+fun CalenderView(title: String, dates: Array<LocalDate?>, schedules: List<ScheduleInfo>) {
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -139,7 +139,7 @@ fun CalenderView(dates: Array<LocalDate?>, schedules: List<ScheduleInfo>) {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "December 2022",
+            text = title,
             color = Gray700,
             fontSize = 18.sp,
             fontFamily = Gmarket,
