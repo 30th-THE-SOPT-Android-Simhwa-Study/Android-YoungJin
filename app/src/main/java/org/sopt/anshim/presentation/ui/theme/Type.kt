@@ -9,9 +9,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import org.sopt.anshim.R
 
-private val Montserrat = FontFamily(
+val Montserrat = FontFamily(
     Font(R.font.montserrat_r),
     Font(R.font.montserrat_b, FontWeight.W700),
+)
+
+val Gmarket = FontFamily(
+    Font(R.font.gmarket_sans_l, FontWeight.Light),
+    Font(R.font.gmarket_sans_m, FontWeight.Medium),
+    Font(R.font.gmarket_sans_b, FontWeight.Bold),
 )
 
 val Suit = FontFamily(

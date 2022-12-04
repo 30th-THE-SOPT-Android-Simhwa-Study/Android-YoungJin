@@ -10,14 +10,17 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +40,105 @@ class CalendarActivity : ComponentActivity() {
     }
 }
 
+/** 요일 뷰 */
+@Composable
+fun DayView(day: String, modifier: Modifier) {
+    Text(
+        modifier = modifier,
+        text = day,
+        color = Gray300,
+        fontSize = 12.sp,
+        fontFamily = Gmarket,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center
+    )
+}
+
+/** 월 - 일요일까지의 모든 요일 뷰 */
+@Composable
+fun DaysView() {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        val modifier = Modifier.weight(1.0f)
+        val days = listOf("Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "Sat")
+        days.forEach { day ->
+            DayView(day = day, modifier = modifier)
+        }
+    }
+}
+
+/** 날짜 뷰 */
+@Composable
+fun DateView(date: Int, modifier: Modifier) {
+    Text(
+        modifier = modifier,
+        text = date.toString(),
+        color = Gray700,
+        fontSize = 14.sp,
+        fontFamily = Gmarket,
+        fontWeight = FontWeight.Medium,
+        textAlign = TextAlign.Center)
+}
+
+/** 1~28,29,30,31까지의 날짜 뷰 */
+@Composable
+fun DatesView() {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        val modifier = Modifier
+            .weight(1.0f)
+            .padding(vertical = 20.dp)
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            for (date in 1..7) {
+                DateView(date = date, modifier)
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            for (date in 8..14) {
+                DateView(date = date, modifier)
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            for (date in 15..21) {
+                DateView(date = date, modifier)
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            for (date in 22..28) {
+                DateView(date = date, modifier)
+            }
+        }
+        Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+            for (date in 29..35) {
+                DateView(date = date, modifier)
+            }
+        }
+    }
+}
+
+@Composable
+fun CalenderView() {
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxWidth(),
+        horizontalAlignment = CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "March 2022",
+            color = Gray700,
+            fontSize = 18.sp,
+            fontFamily = Gmarket,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        DaysView()
+        Spacer(modifier = Modifier.height(6.dp))
+        Divider(color = Gray200, modifier = Modifier.fillMaxWidth())
+        DatesView()
+        Divider(color = Gray200, modifier = Modifier.fillMaxWidth())
+    }
+}
+
 @Composable
 fun ScheduleList(
     schedules: List<ScheduleInfo>,
@@ -45,7 +147,8 @@ fun ScheduleList(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White),
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        contentPadding = PaddingValues(vertical = 20.dp, horizontal = 16.dp)
     ) {
         itemsIndexed(items = schedules) { _, schedule ->
             ScheduleItem(schedule = schedule)
@@ -81,6 +184,14 @@ fun ScheduleItem(schedule: ScheduleInfo) {
             Text(text = timeStr, color = Gray500, fontSize = 10.sp, fontFamily = Suit,
                 fontWeight = FontWeight.Medium)
         }
+    }
+}
+
+@Composable
+@Preview
+fun CalendarPreview() {
+    AnshimTheme {
+        CalenderView()
     }
 }
 
@@ -150,6 +261,5 @@ fun SchedulePreview() {
                 LocalDateTime.of(2022, 12, 27, 20, 0)),
         )
         ScheduleList(schedules)
-//        ScheduleItem(schedules[0])
     }
 }
