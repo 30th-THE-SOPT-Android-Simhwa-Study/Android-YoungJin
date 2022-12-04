@@ -3,6 +3,7 @@ package org.sopt.anshim.presentation.calendar
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,16 +26,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.anshim.data.models.ScheduleInfo
-import org.sopt.anshim.data.models.types.ScheduleType
 import org.sopt.anshim.presentation.ui.theme.*
-import java.time.LocalDateTime
+import org.sopt.anshim.util.safeLet
+import java.time.LocalDate
 
 class CalendarActivity : ComponentActivity() {
+    private val viewModel: CalendarViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AnshimTheme {
-//                ScheduleList()
+                viewModel.fetchCurrentMonthInfo()
+                // 추후 서버 통신을 고려한다면 dates는 항시 보여주되, schedules 존재 여부에 따라 뷰를 그려주면 될 듯
+                safeLet(viewModel.dates.value, viewModel.schedules.value) { date, schedules ->
+                    CalenderView(date, schedules)
+                }
             }
         }
     }
@@ -68,10 +75,10 @@ fun DaysView() {
 
 /** 날짜 뷰 */
 @Composable
-fun DateView(date: Int, modifier: Modifier) {
+fun DateView(date: LocalDate?, modifier: Modifier) {
     Text(
         modifier = modifier,
-        text = date.toString(),
+        text = date?.dayOfMonth?.toString() ?: "",
         color = Gray700,
         fontSize = 14.sp,
         fontFamily = Gmarket,
@@ -81,41 +88,49 @@ fun DateView(date: Int, modifier: Modifier) {
 
 /** 1~28,29,30,31까지의 날짜 뷰 */
 @Composable
-fun DatesView() {
+fun DatesView(dates: Array<LocalDate?>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val modifier = Modifier
             .weight(1.0f)
             .padding(vertical = 20.dp)
         Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-            for (date in 1..7) {
-                DateView(date = date, modifier)
+            for (idx in 0..6) {
+                DateView(date = dates[idx], modifier)
             }
         }
         Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-            for (date in 8..14) {
-                DateView(date = date, modifier)
+            for (idx in 7..13) {
+                DateView(date = dates[idx], modifier)
             }
         }
         Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-            for (date in 15..21) {
-                DateView(date = date, modifier)
+            for (idx in 14..20) {
+                DateView(date = dates[idx], modifier)
             }
         }
         Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-            for (date in 22..28) {
-                DateView(date = date, modifier)
+            for (idx in 21..27) {
+                DateView(date = dates[idx], modifier)
             }
         }
         Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-            for (date in 29..35) {
-                DateView(date = date, modifier)
+            for (idx in 28..34) {
+                DateView(date = dates[idx], modifier)
+            }
+        }
+        if (dates[35] != null) {
+            Row(horizontalArrangement = Arrangement.SpaceAround,
+                modifier = Modifier.fillMaxWidth()) {
+                for (idx in 35..41) {
+                    DateView(date = dates[idx], modifier)
+                }
             }
         }
     }
 }
 
 @Composable
-fun CalenderView() {
+fun CalenderView(dates: Array<LocalDate?>, schedules: List<ScheduleInfo>) {
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -124,7 +139,7 @@ fun CalenderView() {
     ) {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "March 2022",
+            text = "December 2022",
             color = Gray700,
             fontSize = 18.sp,
             fontFamily = Gmarket,
@@ -134,13 +149,14 @@ fun CalenderView() {
         DaysView()
         Spacer(modifier = Modifier.height(6.dp))
         Divider(color = Gray200, modifier = Modifier.fillMaxWidth())
-        DatesView()
+        DatesView(dates)
         Divider(color = Gray200, modifier = Modifier.fillMaxWidth())
+        ScheduleListView(schedules)
     }
 }
 
 @Composable
-fun ScheduleList(
+fun ScheduleListView(
     schedules: List<ScheduleInfo>,
 ) {
     LazyColumn(
@@ -191,7 +207,7 @@ fun ScheduleItem(schedule: ScheduleInfo) {
 @Preview
 fun CalendarPreview() {
     AnshimTheme {
-        CalenderView()
+//        CalenderView()
     }
 }
 
@@ -199,67 +215,6 @@ fun CalendarPreview() {
 @Preview
 fun SchedulePreview() {
     AnshimTheme {
-        val schedules = listOf(
-            ScheduleInfo(ScheduleType.MEETING,
-                "헬푸미 회의",
-                LocalDateTime.of(2022, 9, 18, 23, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "새벽 산책",
-                LocalDateTime.of(2022, 10, 13, 6, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "밤산책",
-                LocalDateTime.of(2022, 10, 28, 6, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "새벽 산책",
-                LocalDateTime.of(2022, 11, 3, 6, 0)),
-            ScheduleInfo(ScheduleType.HANG_OUT,
-                "안심이랑 찜질방가기",
-                LocalDateTime.of(2022, 11, 3, 15, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "새벽 산책",
-                LocalDateTime.of(2022, 11, 8, 6, 0)),
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "벤치프레스 30회 5세트",
-                LocalDateTime.of(2022, 11, 8, 7, 0)),
-            ScheduleInfo(ScheduleType.STUDY,
-                "멀티모듈이랑 맞짱뜨기",
-                LocalDateTime.of(2022, 11, 8, 15, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "데드리프트 30회 5세트",
-                LocalDateTime.of(2022, 11, 25, 7, 0)),
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "벤치프레스 30회 5세트",
-                LocalDateTime.of(2022, 11, 25, 8, 0)),
-            ScheduleInfo(ScheduleType.STUDY,
-                "토스 자소서 쓰기",
-                LocalDateTime.of(2022, 11, 25, 16, 0)),
-            ScheduleInfo(ScheduleType.MEETING,
-                "헬푸미 회의",
-                LocalDateTime.of(2022, 11, 25, 20, 0)),
-            ScheduleInfo(ScheduleType.STUDY,
-                "심화스터디",
-                LocalDateTime.of(2022, 11, 25, 22, 0)),
-
-            ScheduleInfo(ScheduleType.EXERCISE,
-                "풋살하기",
-                LocalDateTime.of(2022, 12, 8, 15, 0)),
-            ScheduleInfo(ScheduleType.STUDY,
-                "코테 뿌시기",
-                LocalDateTime.of(2022, 12, 8, 20, 0)),
-
-            ScheduleInfo(ScheduleType.HANG_OUT,
-                "제주도 여행",
-                LocalDateTime.of(2022, 12, 18, 15, 0)),
-
-            ScheduleInfo(ScheduleType.STUDY,
-                "밀린 강의 청산",
-                LocalDateTime.of(2022, 12, 27, 20, 0)),
-        )
-        ScheduleList(schedules)
+//        ScheduleList(schedules)
     }
 }
