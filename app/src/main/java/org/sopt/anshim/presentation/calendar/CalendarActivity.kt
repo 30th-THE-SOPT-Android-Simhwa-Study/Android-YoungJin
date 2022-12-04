@@ -44,7 +44,8 @@ fun ScheduleList(
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .background(Color.White),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         itemsIndexed(items = schedules) { _, schedule ->
             ScheduleItem(schedule = schedule)
@@ -57,7 +58,6 @@ fun ScheduleItem(schedule: ScheduleInfo) {
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .border(width = 1.dp, color = Gray200, shape = RoundedCornerShape(12.dp))
-            .background(color = Color.White)
             .padding(horizontal = 16.dp, vertical = 12.dp)
             .fillMaxWidth())
     {
@@ -149,6 +149,7 @@ fun SchedulePreview() {
                 "밀린 강의 청산",
                 LocalDateTime.of(2022, 12, 27, 20, 0)),
         )
-        ScheduleItem(schedules[0])
+        ScheduleList(schedules)
+//        ScheduleItem(schedules[0])
     }
 }
