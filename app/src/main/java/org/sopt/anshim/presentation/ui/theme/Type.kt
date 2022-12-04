@@ -14,7 +14,7 @@ private val Montserrat = FontFamily(
     Font(R.font.montserrat_b, FontWeight.W700),
 )
 
-private val Suit = FontFamily(
+val Suit = FontFamily(
     Font(R.font.suit_r),
     Font(R.font.suit_m, FontWeight.Medium),
     Font(R.font.suit_b, FontWeight.Bold),

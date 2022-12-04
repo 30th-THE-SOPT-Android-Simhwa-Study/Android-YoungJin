@@ -4,22 +4,26 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.anshim.data.models.ScheduleInfo
 import org.sopt.anshim.data.models.types.ScheduleType
-import org.sopt.anshim.presentation.ui.theme.AnshimTheme
-import org.sopt.anshim.presentation.ui.theme.Gray500
-import org.sopt.anshim.presentation.ui.theme.Gray700
+import org.sopt.anshim.presentation.ui.theme.*
 import java.time.LocalDateTime
 
 class CalendarActivity : ComponentActivity() {
@@ -52,8 +56,11 @@ fun ScheduleList(
 fun ScheduleItem(schedule: ScheduleInfo) {
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
+            .border(width = 1.dp, color = Gray200, shape = RoundedCornerShape(12.dp))
+            .background(color = Color.White)
             .padding(horizontal = 16.dp, vertical = 12.dp)
-            .fillMaxWidth()) {
+            .fillMaxWidth())
+    {
         Image(painterResource(id = schedule.type.imgRes), contentDescription = null)
 
         val timeStr = "${if (schedule.time.hour in 0..11) "오전" else "오후"} ${schedule.time.hour}시"
@@ -63,15 +70,22 @@ fun ScheduleItem(schedule: ScheduleInfo) {
         Column() {
             Text(text = stringResource(id = schedule.type.strRes),
                 color = schedule.type.colorRes,
-                fontSize = 10.sp)
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(text = schedule.title, color = Gray700, fontSize = 14.sp)
-            Text(text = timeStr, color = Gray500, fontSize = 10.sp)
+                fontSize = 10.sp,
+                fontFamily = Suit,
+                fontWeight = FontWeight.Medium
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = schedule.title, color = Gray700, fontSize = 14.sp, fontFamily = Suit,
+                fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = timeStr, color = Gray500, fontSize = 10.sp, fontFamily = Suit,
+                fontWeight = FontWeight.Medium)
         }
     }
 }
 
 @Composable
+@Preview
 fun SchedulePreview() {
     AnshimTheme {
         val schedules = listOf(
