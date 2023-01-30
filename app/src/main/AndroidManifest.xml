@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -19,6 +18,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Anshim">
         <activity
+            android:name=".presentation.calendar.CalendarActivity"
+            android:exported="true"
+            android:label="@string/title_activity_calendar"
+            android:theme="@style/Theme.Anshim">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".presentation.lotto.LottoActivity"
             android:exported="false" />
         <activity
@@ -27,13 +37,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.sign.screens.SignInUsernameActivity"
-            android:exported="true"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize">
-            <!-- TODO 추후 수정 예정 -->
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".presentation.home.screens.HomeActivity"
@@ -64,22 +69,17 @@
             android:exported="false" />
 
         <service
-            android:name="org.sopt.anshim.presentation.component.MusicPlayerService"
+            android:name=".presentation.component.MusicPlayerService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name="org.sopt.anshim.presentation.component.MusicPlayerService"
+            android:name=".presentation.component.MusicPlayerService"
             android:enabled="true"
             android:exported="false" />
-
         <activity
             android:name=".presentation.component.BroadCastActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
+
         <receiver
             android:name=".presentation.component.SMSReceiver"
             android:enabled="true"
