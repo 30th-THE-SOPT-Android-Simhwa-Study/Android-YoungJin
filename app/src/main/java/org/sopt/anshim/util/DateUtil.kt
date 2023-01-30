@@ -8,13 +8,13 @@ object DateUtil {
 
     fun getTodayDayOfWeek() =
         when (today) {
-            1 -> DayOfWeekType.SUN
-            2 -> DayOfWeekType.MON
-            3 -> DayOfWeekType.TUE
-            4 -> DayOfWeekType.WED
-            5 -> DayOfWeekType.THU
-            6 -> DayOfWeekType.FRI
-            else -> DayOfWeekType.SAT
+            1 -> DayOfWeekType.MON
+            2 -> DayOfWeekType.TUE
+            3 -> DayOfWeekType.WED
+            4 -> DayOfWeekType.THU
+            5 -> DayOfWeekType.FRI
+            6 -> DayOfWeekType.SAT
+            else -> DayOfWeekType.SUN
         }
 
     fun convertIndexToDayOfWeek(index: Int): DayOfWeekType = when (index) {
