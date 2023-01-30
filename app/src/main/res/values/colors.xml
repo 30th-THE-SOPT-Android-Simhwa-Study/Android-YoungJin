@@ -14,7 +14,9 @@
     <color name="gray_100">#EBEBEB</color>
     <color name="gray_200">#ABABAB</color>
     <color name="gray_400">#888888</color>
+    <color name="gray_600">#666666</color>
     <color name="gray_700">#292929</color>
+    <color name="gray_800">#222222</color>
 
     <color name="black_alpha_5">#0D000000</color>
 
