@@ -57,6 +57,7 @@
 
     <style name="Widget.Navigation.Button.Style" parent="Widget.Button.Style">
         <item name="android:padding">@dimen/spacingBase</item>
+        <item name="android:layout_width">48dp</item>
     </style>
 
     <style name="Widget.RoundButton.TextAppearance" parent="">
@@ -102,5 +103,12 @@
     <style name="Widget.CircleImageView.Half" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Restaurant -->
+    <style name="TextAppearance.OpeningTime" parent="">
+        <item name="android:fontFamily">@font/suit_m</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:textColor">@color/gray_600</item>
     </style>
 </resources>

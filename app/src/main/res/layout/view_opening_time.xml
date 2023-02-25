@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/suit_m"
+            android:textColor="@color/gray_600"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="@id/btn_dropdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_dropdown"
+            tools:text="월요일 09:00 ~ 20:00" />
+
+        <ImageView
+            android:id="@+id/btn_dropdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:src="@drawable/selector_btn_dropdown"
+            app:layout_constraintStart_toEndOf="@id/tv_today"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_nextday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="5dp"
+            android:textAppearance="@style/TextAppearance.OpeningTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_today"
+            tools:text="화요일 09:00 ~ 20:00\n수요일 09:00 ~ 20:00\n목요일 09:00 ~ 20:00\n금요일 09:00 ~ 20:00\n토요일 09:00 ~ 20:00\n일요일 09:00 ~ 20:00" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
